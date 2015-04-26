@@ -1,0 +1,135 @@
+﻿@using Refma.Models
+@model Refma.Models.WebArticle
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    ViewBag.Title = "Details";
+}
+@section CustomJavascript {
+    <script type="text/javascript">
+  
+        $(document).ready(function () {
+
+            function updateElement(eid, k) {
+                $.ajax({
+                    type: "POST",
+                    url: '/LangElement/UpdateElementJSON',
+                    data: { elementid: eid, knowledge: k },
+                    success: function () {
+                        // do not do anything
+                    }
+                });
+            }
+
+            function changeClassForElement(eid, new1) {
+                $('span[data-eid="' + eid + '"]').each(function () {
+                    $(this).removeClass().addClass(new1);
+                });
+            }
+
+            $('[data-toggle="popover"]').popover(
+                    { container: 'body', html: true, placement: 'bottom', title: '', trigger: 'focus' }
+              );
+
+            $('body').on('click', 'button#setUnknown', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 0);
+                changeClassForElement(eid, "Unknown");
+            });
+
+            $('body').on('click', 'button#setSeen', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 1);
+                changeClassForElement(eid, "Seen");
+            });
+
+            $('body').on('click', 'button#setHard', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 2);
+                changeClassForElement(eid, "Difficult");
+   
+            });
+
+            $('body').on('click', 'button#setKnown', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 3);
+                changeClassForElement(eid, "Known");
+    
+            });
+        });
+
+    </script>
+}
+<div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
+
+
+@foreach (var file in Directory.GetFiles(Server.MapPath("/images/"), Model.Lang.Code + "-*"))
+{
+
+    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Path.GetFileName(file)) no-repeat; background-size: 30px 30px;"></div>
+}
+
+<h2>@Html.DisplayFor(model => model.Title)</h2>
+
+
+<div>
+  
+    <hr />
+    <span class="main-article">
+        @foreach (var el in (List<ViewArticleElement>)ViewBag.ViewElements)
+        {
+
+            if (@el.IsNotAWord)
+            {
+                if (@el.Value == "\n")
+                {
+                    <br><br>
+                }
+                else
+                {
+                    @el.Value
+                }
+            }
+            else
+            {
+
+                var dataContent = "";
+                if (el.Translations.Count > 0)
+                {
+
+                    foreach (var t in el.Translations)
+                    {
+                        dataContent += dataContent + "<span class=\"translation-item\">" + t + "</span>" + "<br/>";
+                    }
+                }
+
+                dataContent += "<button id='setUnknown' type='button' class='btn btn-danger' data-eid='" + @el.LangElementId + "'>0</button>" +
+                               "<button id='setSeen' type='button' class='btn btn-info' data-eid='" + @el.LangElementId + "'>1</button>" +
+                               "<button id='setHard' type='button' class='btn btn-warning' data-eid='" + @el.LangElementId + "'>2</button>" +
+                               "<button id='setKnown' type='button' class='btn btn-success' data-eid='" + @el.LangElementId + "'>3</button>";
+
+                <span data-eid="@el.LangElementId" tabindex="0" data-trigger="focus" data-toggle="popover"
+                      class="word @el.Knowledge"
+                      title="
+                    <b>@el.Value</b>"
+                    data-toggle="popover"
+                    data-content="@dataContent">@el.Value
+                </span>
+
+            }
+
+        }
+    </div>
+    <br />
+
+ 
+</div>
+
+
+<p>
+
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

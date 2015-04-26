@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Refma.Models.WebArticle>
+
+@{
+    ViewBag.Title = "My Articles";
+}
+
+<h2>My Articles</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Lang)
+        </th>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lang.Name)
+            </td>
+            <td>
+
+                <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@item.Lang.ImageBig) no-repeat; background-size: 30px 30px;"></div>
+
+
+                @foreach (var file in Directory.GetFiles(Server.MapPath("/images/"), item.Lang.Code + "-*.png"))
+                {
+                    
+                    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Path.GetFileName(file)) no-repeat; background-size: 30px 30px;"></div>
+                }
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)<br />
+                <a href="@Html.DisplayFor(modelItem => item.URL)">Source</a>
+            </td>
+            <td style="text-align:right">
+                @Html.ActionLink("Read", "Read", new { id = item.ID }, new { @type = "button", @class = "btn btn-info" })
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @type = "button", @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+
+</table>

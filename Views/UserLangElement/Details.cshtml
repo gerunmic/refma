@@ -1,0 +1,50 @@
+﻿@model Refma.Models.UserLangElement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserLangElement</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LangElement.Value)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LangElement.Value)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Knowledge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Knowledge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Occurency)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Occurency)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

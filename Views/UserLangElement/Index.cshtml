@@ -1,0 +1,79 @@
+﻿@model PagedList.IPagedList<Refma.Models.UserLangElement>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "My Words";
+}
+
+<h2>My Words</h2>
+
+@using (Html.BeginForm("Index", "UserLangElement", FormMethod.Get))
+{
+    <p>
+        Find: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
+<table class="table text-center">
+    <tr>
+        <th class="danger text-center">@Html.ActionLink("Unknown", "Index", new { knowledge = 0 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 0 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
+        <th class="info text-center">@Html.ActionLink("Seen", "Index", new { knowledge = 1 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId,  knowledge = 1 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
+        <th class="warning text-center">@Html.ActionLink("Difficult", "Index", new { knowledge = 2 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 2 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
+        <th class="success text-center">@Html.ActionLink("Known", "Index", new { knowledge = 3 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 3 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
+    </tr>
+    <tr>
+        <td>@ViewBag.CountUnknown</td>
+        <td>@ViewBag.CountSeen</td>
+        <td>@ViewBag.CountDifficult</td>
+        <td>@ViewBag.CountKnown</td>
+    </tr>
+</table>
+<p>
+
+</p>
+<table class="table">
+    <tr>
+
+        <th> 
+           Language
+        </th>
+        <th>
+           Value
+        </th>
+        <th>
+           Knowledge
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.LangElement.Lang.Name)  
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.LangElement.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Knowledge)
+        </td>
+
+        <td style="text-align:right">
+            @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-info" })
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @type = "button", @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page,  currentFilter = ViewBag.CurrentFilter }))

@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Refma.Models.LangElementTranslation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Lang.Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LangElement.Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Translation)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lang.Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LangElement.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Translation)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
