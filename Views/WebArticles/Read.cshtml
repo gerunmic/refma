@@ -12,6 +12,16 @@
   
         $(document).ready(function () {
 
+            getPercentageKnown();
+
+            function getPercentageKnown()  {
+                var totalWords = $('span').length;
+                var numItemsKnown = $('.Known').length;
+                var percentageKnown = numItemsKnown * 100 / totalWords;
+
+                $('div#percentage').html(Math.round(percentageKnown) + "% words known in this article.");
+            }
+
             function updateElement(eid, k) {
                 $.ajax({
                     type: "POST",
@@ -37,26 +47,30 @@
                 var eid = $(this).attr("data-eid");
                 updateElement(eid, 0);
                 changeClassForElement(eid, "Unknown");
+                getPercentageKnown();
             });
 
             $('body').on('click', 'button#setSeen', function () {
                 var eid = $(this).attr("data-eid");
                 updateElement(eid, 1);
                 changeClassForElement(eid, "Seen");
+                getPercentageKnown();
             });
 
             $('body').on('click', 'button#setHard', function () {
                 var eid = $(this).attr("data-eid");
+                
                 updateElement(eid, 2);
                 changeClassForElement(eid, "Difficult");
-   
+                getPercentageKnown();
             });
 
             $('body').on('click', 'button#setKnown', function () {
                 var eid = $(this).attr("data-eid");
+                
                 updateElement(eid, 3);
                 changeClassForElement(eid, "Known");
-    
+                getPercentageKnown();
             });
         });
 
@@ -73,7 +87,7 @@
 
 <h2>@Html.DisplayFor(model => model.Title)</h2>
 
-
+<div id="percentage"></div>
 <div>
   
     <hr />
@@ -119,15 +133,10 @@
                 </span>
 
             }
-
         }
     </div>
-    <br />
-
- 
+    <br /> 
 </div>
-
-
 <p>
 
     @Html.ActionLink("Back to List", "Index")

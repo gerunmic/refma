@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Refma.Models
 {
@@ -21,13 +22,28 @@ namespace Refma.Models
 
         }
 
-        public static string ExtractTextOnly(string URL)
+        public static string ExtractTextOnly(string URL, out string title)
         {
             string htmlContent = ExtractSource(URL);
 
-            string plainText = NBoilerpipe.Extractors.ArticleExtractor.INSTANCE.GetText(htmlContent);
+            title = GetTitle(htmlContent);
+
+            string plainText = NBoilerpipe.Extractors.DefaultExtractor.INSTANCE.GetText(htmlContent);
 
             return plainText;
+        }
+
+        static string GetTitle(string htmlText)
+        {
+            Match m = Regex.Match(htmlText, @"<title>\s*(.+?)\s*</title>");
+            if (m.Success)
+            {
+                return m.Groups[1].Value;
+            }
+            else
+            {
+                return "";
+            }
         }
 
     }
