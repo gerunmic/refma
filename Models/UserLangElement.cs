@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Refma.Models
         [ForeignKey("LangElementId")]
         public virtual LangElement LangElement { get; set; }
 
+        [DefaultValue(Knowledge.Known)]
         public Knowledge Knowledge { get; set; }
         public int Occurency { get; set; }
     }

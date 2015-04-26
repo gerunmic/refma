@@ -7,13 +7,13 @@ namespace Refma.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class lexemes3 : IMigrationMetadata
+    public sealed partial class init : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(lexemes3));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
         
         string IMigrationMetadata.Id
         {
-            get { return "201504221301254_lexemes3"; }
+            get { return "201504261522504_init"; }
         }
         
         string IMigrationMetadata.Source

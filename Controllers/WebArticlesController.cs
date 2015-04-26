@@ -22,8 +22,10 @@ namespace Refma.Controllers
             string userId = User.Identity.GetUserId();
             if (userId != null)
             {
+                
                 var userWebArticles = from e in db.WebArticles
-                                      where e.UserId == userId
+                                      from u in db.Users 
+                                      where e.UserId == userId && e.LangId == u.TargetLangId
                                       select e;
                 return View(userWebArticles);
             }
@@ -74,6 +76,11 @@ namespace Refma.Controllers
         // GET: /WebArticles/Create
         public ActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Register", "Account");
+            }
+
             string userId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
             ViewBag.CurrentTargetLangId = currentUser.TargetLangId;
@@ -92,6 +99,8 @@ namespace Refma.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,LangId,Title,URL")] WebArticle webarticle)
         {
+            
+
             if (ModelState.IsValid)
             {
                 string userId = User.Identity.GetUserId();
@@ -123,7 +132,7 @@ namespace Refma.Controllers
 
           
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Read", new { id = webarticle.ID });
             }
             return View(webarticle);
         }

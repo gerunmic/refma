@@ -210,45 +210,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504220718282_init.cs" />
-    <Compile Include="Migrations\201504220718282_init.Designer.cs">
-      <DependentUpon>201504220718282_init.cs</DependentUpon>
+    <Compile Include="Migrations\201504261522504_init.cs" />
+    <Compile Include="Migrations\201504261522504_init.Designer.cs">
+      <DependentUpon>201504261522504_init.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201504220751470_targetlanguser.cs" />
-    <Compile Include="Migrations\201504220751470_targetlanguser.Designer.cs">
-      <DependentUpon>201504220751470_targetlanguser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504221229438_lexemes.cs" />
-    <Compile Include="Migrations\201504221229438_lexemes.Designer.cs">
-      <DependentUpon>201504221229438_lexemes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504221244372_lexemes2.cs" />
-    <Compile Include="Migrations\201504221244372_lexemes2.Designer.cs">
-      <DependentUpon>201504221244372_lexemes2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504221301254_lexemes3.cs" />
-    <Compile Include="Migrations\201504221301254_lexemes3.Designer.cs">
-      <DependentUpon>201504221301254_lexemes3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504230829135_articleelements.cs" />
-    <Compile Include="Migrations\201504230829135_articleelements.Designer.cs">
-      <DependentUpon>201504230829135_articleelements.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504231131427_articleelements_entfernen.cs" />
-    <Compile Include="Migrations\201504231131427_articleelements_entfernen.Designer.cs">
-      <DependentUpon>201504231131427_articleelements_entfernen.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504251407450_raw-article-elements.cs" />
-    <Compile Include="Migrations\201504251407450_raw-article-elements.Designer.cs">
-      <DependentUpon>201504251407450_raw-article-elements.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504251844220_remove-rawarticles.cs" />
-    <Compile Include="Migrations\201504251844220_remove-rawarticles.Designer.cs">
-      <DependentUpon>201504251844220_remove-rawarticles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504252002364_language-icon.cs" />
-    <Compile Include="Migrations\201504252002364_language-icon.Designer.cs">
-      <DependentUpon>201504252002364_language-icon.cs</DependentUpon>
+    <Compile Include="Migrations\201504261602320_init2.cs" />
+    <Compile Include="Migrations\201504261602320_init2.Designer.cs">
+      <DependentUpon>201504261602320_init2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -371,35 +339,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504220718282_init.resx">
-      <DependentUpon>201504220718282_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504261522504_init.resx">
+      <DependentUpon>201504261522504_init.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504220751470_targetlanguser.resx">
-      <DependentUpon>201504220751470_targetlanguser.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504221229438_lexemes.resx">
-      <DependentUpon>201504221229438_lexemes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504221244372_lexemes2.resx">
-      <DependentUpon>201504221244372_lexemes2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504221301254_lexemes3.resx">
-      <DependentUpon>201504221301254_lexemes3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504230829135_articleelements.resx">
-      <DependentUpon>201504230829135_articleelements.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504231131427_articleelements_entfernen.resx">
-      <DependentUpon>201504231131427_articleelements_entfernen.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504251407450_raw-article-elements.resx">
-      <DependentUpon>201504251407450_raw-article-elements.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504251844220_remove-rawarticles.resx">
-      <DependentUpon>201504251844220_remove-rawarticles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504252002364_language-icon.resx">
-      <DependentUpon>201504252002364_language-icon.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504261602320_init2.resx">
+      <DependentUpon>201504261602320_init2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

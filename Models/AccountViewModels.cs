@@ -28,6 +28,11 @@ namespace Refma.Models
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+
+        [Display(Name = "New target language")]
+        public int? TargetLangId { get; set; }
+        public Lang TargetLang { get; set; }
+
     }
 
     public class LoginViewModel
