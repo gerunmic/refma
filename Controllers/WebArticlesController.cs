@@ -1,4 +1,4 @@
-﻿using System.Data.Entity;
+using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,8 @@ using Refma.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Text.RegularExpressions;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace Refma.Controllers
 {
@@ -30,7 +32,6 @@ namespace Refma.Controllers
                 return View(userWebArticles);
             }
             return View();// show nothing
-            // return View(db.WebArticles.ToList());
         }
 
 
@@ -99,8 +100,6 @@ namespace Refma.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,LangId,Title,URL")] WebArticle webarticle)
         {
-            
-
             if (ModelState.IsValid)
             {
                 string userId = User.Identity.GetUserId();
@@ -114,26 +113,29 @@ namespace Refma.Controllers
                     webarticle.Title = webarticle.Title + title;
                     db.WebArticles.Add(webarticle);
                     db.SaveChanges();
+                    // end saving article, id known nown
 
-                    
-                    WebtextPreparer wp = new WebtextPreparer(webarticle);
-                    WebtextPrepareResult articleResult = wp.PrepareArticle();
-                    webarticle = articleResult.article;
+                    // update insert or update base elements
+                    string[] splitStrings = Regex.Split(webarticle.PlainText.Replace("\n", String.Empty), SpecialCharactersClass.getNonLetterPattern()).Distinct().Where(s => s.Length >= 1).ToArray();
 
-                    db.LangElements.AddOrUpdate<LangElement>(e => new { e.LangId, e.Value }, articleResult.elements.Distinct().ToArray());
-                    db.SaveChanges();
-                    foreach (LangElement e in articleResult.elements)
+                    List<LangElement> articleElements = new List<LangElement>(splitStrings.Length);
+                    for (int i = 0; i < splitStrings.Length; i++)
                     {
-                        UserLangElement ue = new UserLangElement();
-                        ue.UserId = userId;
-                        ue.LangElementId = e.ID;
-                        db.UserLangElements.AddOrUpdate<UserLangElement>(ue);
-                    }
-                   
-                }
+                       
+                        string currentString = splitStrings[i];
+                        LangElement foundElement = db.LangElements.Where(l => l.Value.Equals(currentString, StringComparison.OrdinalIgnoreCase) && l.LangId == webarticle.LangId).FirstOrDefault();
+                        if (foundElement == null)
+                        {
+                                foundElement = new LangElement() { LangId = webarticle.LangId, Value = currentString };
+                                db.LangElements.Add(foundElement);
+                                db.SaveChanges();     
+                        }
 
-          
-                db.SaveChanges();
+                        db.WebArticleElements.AddOrUpdate(new WebArticleElement() { WebArticleId = webarticle.ID, LangElementId = foundElement.ID });
+                        db.SaveChanges();
+
+                    }
+                }
                 return RedirectToAction("Read", new { id = webarticle.ID });
             }
             return View(webarticle);
