@@ -16,6 +16,5 @@ namespace Refma.Models
         public virtual LangElement LangElement { get; set; }
 
         public Knowledge Knowledge { get; set; }
-        public int Occurency { get; set; }
     }
 }
