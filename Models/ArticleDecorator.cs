@@ -1,9 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Web;
-using Microsoft.AspNet.Identity;
 
 namespace Refma.Models
 {
@@ -18,15 +15,21 @@ namespace Refma.Models
         {
             this.article = article;
 
-            this.dic = new Dictionary<string, LangElement>(StringComparer.InvariantCultureIgnoreCase);
+            this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
 
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+                var allElements = from e in db.LangElements
+                                  from w in db.WebArticleElements
+                                  where e.ID == w.LangElementId && w.WebArticleId == article.ID
+                                  select e;
+                var userElements = from u in db.UserLangElements
+                                   from w in db.WebArticleElements
+                                   where u.LangElementId == w.LangElementId && w.WebArticleId == article.ID
+                                   select u;
 
-                var userELements = db.UserLangElements.Where(e => e.UserId == this.article.UserId);
-                var allElements = db.LangElements.Where(e => e.LangId == this.article.LangId);
 
-                foreach (var e in userELements.ToList<UserLangElement>())
+                foreach (var e in userElements.ToList<UserLangElement>())
                 {
                     dicUser.Add(e.LangElementId, e);
                 }
@@ -55,59 +58,21 @@ namespace Refma.Models
                     {
                         dicUser.TryGetValue(element.ID, out ue);
                     }
-                    else
+
+                    ViewArticleElement ve = new ViewArticleElement() { LangElementId = element.ID, Value = str, Knowledge = Knowledge.Unknown };
+                    if (ue != null)
                     {
-                        ue = new UserLangElement();
-                        using (ApplicationDbContext db = new ApplicationDbContext())
-                        {
-                            ue.LangElementId = element.ID;
-                            ue.UserId = article.UserId;
-                            ue.Occurency = 1;
-                            ue.Knowledge = Knowledge.Unknown;
-                            db.UserLangElements.Add(ue);
-                            db.SaveChanges(); // saved
-                            dicUser.Add(ue.LangElementId, ue);
-                        }
+                        ve.Knowledge = ue.Knowledge;
                     }
-                    viewElements.Add(new ViewArticleElement() { LangElementId = ue.LangElementId, Value = str, Knowledge = ue.Knowledge });
+
+                    viewElements.Add(ve);
                 }
                 else
                 {
-                    if (WebtextPreparer.isIgnoredTextElement(str)) // special character or space
-                    {
-                        viewElements.Add(new ViewArticleElement() { IsNotAWord = true, Value = str });
-                    }
-                    else
-                    {
-                        LangElement e = new LangElement();
-                        UserLangElement u = new UserLangElement();
-
-                        using (ApplicationDbContext db = new ApplicationDbContext())
-                        {
-                            e.LangId = article.LangId;
-                            e.Value = str;
-
-                            u.LangElement = e;
-                            u.UserId = article.UserId;
-                            u.Knowledge = Knowledge.Unknown;
-
-                            db.LangElements.Add(e);
-                            db.UserLangElements.Add(u);
-                            db.SaveChanges();
-
-                            dic.Add(e.Value, e);
-                            dicUser.Add(e.ID, u);
-                        }
-
-                        viewElements.Add(new ViewArticleElement() { LangElementId = u.LangElementId, Value = str, Knowledge = u.Knowledge });
-                    }
+                    viewElements.Add(new ViewArticleElement() { IsNotAWord = true, Value = str });
                 }
             }
             return viewElements;
         }
-
-
-
-
     }
 }
