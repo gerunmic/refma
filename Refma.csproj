@@ -232,6 +232,7 @@
     <Compile Include="Models\UserLangElement.cs" />
     <Compile Include="Models\ViewArticleElement.cs" />
     <Compile Include="Models\WebArticle.cs" />
+    <Compile Include="Models\WebArticleElement.cs" />
     <Compile Include="Models\WebtextExtractor.cs" />
     <Compile Include="Models\WebtextPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
