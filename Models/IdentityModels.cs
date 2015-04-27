@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -25,7 +25,9 @@ namespace Refma.Models
         public DbSet<LangElement> LangElements { get; set; }
         public DbSet<LangElementTranslation> LangElementTranslations { get; set; }
         public DbSet<UserLangElement> UserLangElements { get; set; }
+        
         public DbSet<WebArticle> WebArticles { get; set; }
+        public DbSet<WebArticleElement> WebArticleElements { get; set; }
         public DbSet<Lang> Langs { get; set; }
         public DbSet<LangElementGroup> LangElementGroups { get; set; }
         public DbSet<Tag> Tags { get; set; }
