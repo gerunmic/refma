@@ -1,10 +1,10 @@
 ﻿@model Refma.Models.WebArticle
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Add article";
 }
 
-<h2>Create</h2>
+<h2>Add a new article</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>WebArticle</h4>
+        <h4>Article</h4>
         <hr />
         @Html.ValidationSummary(true)
 

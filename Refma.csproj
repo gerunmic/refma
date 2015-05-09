@@ -218,6 +218,14 @@
     <Compile Include="Migrations\201504261602320_init2.Designer.cs">
       <DependentUpon>201504261602320_init2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505082041584_changedmodel.cs" />
+    <Compile Include="Migrations\201505082041584_changedmodel.Designer.cs">
+      <DependentUpon>201505082041584_changedmodel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505082114199_WebArticleRemoveSourceText.cs" />
+    <Compile Include="Migrations\201505082114199_WebArticleRemoveSourceText.Designer.cs">
+      <DependentUpon>201505082114199_WebArticleRemoveSourceText.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
@@ -234,7 +242,6 @@
     <Compile Include="Models\WebArticle.cs" />
     <Compile Include="Models\WebArticleElement.cs" />
     <Compile Include="Models\WebtextExtractor.cs" />
-    <Compile Include="Models\WebtextPreparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -257,6 +264,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -346,6 +354,12 @@
     <EmbeddedResource Include="Migrations\201504261602320_init2.resx">
       <DependentUpon>201504261602320_init2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505082041584_changedmodel.resx">
+      <DependentUpon>201505082041584_changedmodel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505082114199_WebArticleRemoveSourceText.resx">
+      <DependentUpon>201505082114199_WebArticleRemoveSourceText.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -365,7 +379,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55346</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55346/</IISUrl>
+          <IISUrl>http://localhost:55347/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

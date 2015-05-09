@@ -15,7 +15,6 @@ namespace Refma.Models
         public virtual Lang Lang { get; set; }
         public String Title { get; set; }
         public String URL { get; set; }
-        public String SourceText { get; set; }
         public String PlainText { get; set; }
         public string UserId { get; set; }
         [ForeignKey("UserId")]

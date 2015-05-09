@@ -16,9 +16,16 @@ namespace Refma.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /LangElementTranslation/
-        public ActionResult Index()
+        public ActionResult Index(int? langElementId)
         {
             var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
+
+            if (langElementId.HasValue)
+            {
+                langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
+                ViewBag.Itemid = langElementId;
+            }
+            
             return View(langelementtranslations.ToList());
         }
 

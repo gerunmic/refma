@@ -50,8 +50,8 @@ namespace Refma.Controllers
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
 
-            ArticleDecorator d = new ArticleDecorator(webarticle);
-            List<ViewArticleElement> viewElements = d.ExtractElements();
+            ArticleDecorator decorator = new ArticleDecorator(webarticle);
+            List<ViewArticleElement> viewElements = decorator.GetAllViewElements();
 
             // todo: check if not too slow!
             /*
@@ -115,22 +115,28 @@ namespace Refma.Controllers
                     db.SaveChanges();
                     // end saving article, id known nown
 
-                    // update insert or update base elements
+                    // ...update insert or update base elements
+                    
+                    // split text into "word"-strings to get distinct "words" of article without special characters likes spaces, line feeds etc.
                     string[] splitStrings = Regex.Split(webarticle.PlainText.Replace("\n", String.Empty), SpecialCharactersClass.getNonLetterPattern()).Distinct().Where(s => s.Length >= 1).ToArray();
 
+                    // create new list and transfer plain "word" strings to LangElement-Objects
                     List<LangElement> articleElements = new List<LangElement>(splitStrings.Length);
                     for (int i = 0; i < splitStrings.Length; i++)
                     {
-                       
+                   
                         string currentString = splitStrings[i];
+                        // check if word exists already in database
                         LangElement foundElement = db.LangElements.Where(l => l.Value.Equals(currentString, StringComparison.OrdinalIgnoreCase) && l.LangId == webarticle.LangId).FirstOrDefault();
                         if (foundElement == null)
                         {
+                                // not found, add word to database
                                 foundElement = new LangElement() { LangId = webarticle.LangId, Value = currentString };
                                 db.LangElements.Add(foundElement);
                                 db.SaveChanges();     
                         }
 
+                        // link this word also to article to reduce loading times when reading
                         db.WebArticleElements.AddOrUpdate(new WebArticleElement() { WebArticleId = webarticle.ID, LangElementId = foundElement.ID });
                         db.SaveChanges();
 

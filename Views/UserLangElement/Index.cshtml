@@ -65,7 +65,7 @@
 
         <td style="text-align:right">
             @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-info" })
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @type = "button", @class = "btn btn-danger" })
+            @Html.ActionLink("Show Translations", "Index", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-warning" })
         </td>
     </tr>
 }

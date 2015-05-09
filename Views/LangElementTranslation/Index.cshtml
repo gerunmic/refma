@@ -1,24 +1,27 @@
 ﻿@model IEnumerable<Refma.Models.LangElementTranslation>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Translations";
 }
 
-<h2>Index</h2>
+<h2>Translations</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add new translation", "Create", new { langElementId = ViewBag.Itemid })
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Lang.Code)
+          Source Language
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LangElement.Value)
+          Word
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Translation)
+          Target Language
+        </th>
+        <th>
+          Translation
         </th>
         <th></th>
     </tr>
@@ -26,18 +29,20 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Lang.Code)
+            @Html.DisplayFor(modelItem => item.LangElement.Lang.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.LangElement.Value)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.Lang.Name)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Translation)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @type = "button", @class = "btn btn-info" }) 
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @type = "button", @class = "btn btn-danger" })
         </td>
     </tr>
 }

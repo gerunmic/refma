@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Refma.Models
 {
@@ -42,10 +43,17 @@ namespace Refma.Models
 
         }
 
-        public List<ViewArticleElement> ExtractElements()
+        public static string[] ExtractStringElements(string source)
         {
+            string[] stringElements = Regex.Split(source, SpecialCharactersClass.getSplitPattern());
+            return stringElements;
+        }
+
+        public List<ViewArticleElement> GetAllViewElements()
+        {
+            // returns all elements of the article with additional information for the view (such as if its a word, a special character, known etc.) the order must be exactly as it appears in the source article
             List<ViewArticleElement> viewElements = new List<ViewArticleElement>();
-            string[] allStrings = WebtextPreparer.ExtractStringElements(article.PlainText);
+            string[] allStrings = ExtractStringElements(article.PlainText);
             foreach (var str in allStrings)
             {
                 if (dic.ContainsKey(str))
