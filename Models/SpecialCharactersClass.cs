@@ -9,12 +9,13 @@ namespace Refma.Models
     {
         public static string getSplitPattern()
         {
-           return "([\\d\\ \\-\\.\\:\\,\\–,\\»,\\«,\\;\\(\\)\\{\\}\\[\\]\\n\\/\\\"\\|\\°\\~\\*\\&\\%\\<\\↑\\£\\>])";
+            return @"([\p{P}\p{N}\p{Z}\p{S}\p{C}]+)";
+            //return "([\\d\\ \\-\\.\\:\\,\\–,\\»,\\«,\\;\\(\\)\\{\\}\\[\\]\\n\\/\\\"\\|\\°\\~\\*\\&\\%\\<\\↑\\£\\>\\?])";
         }
 
         public static string getNonLetterPattern()
         {
-            return @"[\p{P}\p{N}\p{Z}\p{S}]+";
+            return @"[\p{P}\p{N}\p{Z}\p{S}\p{C}]+";
         }
 
         public static string getLetterOnlyPattern()

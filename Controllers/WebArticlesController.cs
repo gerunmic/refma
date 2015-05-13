@@ -29,6 +29,8 @@ namespace Refma.Controllers
                                       from u in db.Users 
                                       where e.UserId == userId && e.LangId == u.TargetLangId
                                       select e;
+                
+
                 return View(userWebArticles);
             }
             return View();// show nothing
@@ -54,12 +56,12 @@ namespace Refma.Controllers
             List<ViewArticleElement> viewElements = decorator.GetAllViewElements();
 
             // todo: check if not too slow!
-            /*
+          
             foreach (var ve in viewElements)
             {
                 if (ve.IsNotAWord == false)
                 {
-                   var trans =  db.LangElementTranslations.Where(t => t.LangElementId == ve.UserLangElement.LangElementId && t.LangId == currentUser.LangId).Distinct().Take(2);
+                   var trans =  db.LangElementTranslations.Where(t => t.LangElementId == ve.LangElementId && t.LangId == currentUser.LangId).Distinct().Take(2);
                    foreach(var t in trans)
                    {
                        ve.Translations.Add(t.Translation);
@@ -67,7 +69,7 @@ namespace Refma.Controllers
                    }
                 }
             }
-             * */
+           
 
             ViewBag.ViewElements = viewElements;
           

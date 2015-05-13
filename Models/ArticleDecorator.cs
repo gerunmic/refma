@@ -7,17 +7,37 @@ namespace Refma.Models
 {
     public class ArticleDecorator
     {
-        private Dictionary<String, LangElement> dic;
+        private Dictionary<String, LangElement> dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
+
+        public Dictionary<String, LangElement> Dic
+        {
+            get { return dic; }
+            set { dic = value; }
+        }
         private Dictionary<int, UserLangElement> dicUser = new Dictionary<int, UserLangElement>();
+
+        public Dictionary<int, UserLangElement> DicUser
+        {
+            get { return dicUser; }
+            set { dicUser = value; }
+        }
         private WebArticle article = null;
 
 
-        public ArticleDecorator(WebArticle article)
+        public ArticleDecorator(WebArticle article, Boolean readFromDatabase = true)
         {
             this.article = article;
 
-            this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
+           // this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
 
+            if (readFromDatabase) { 
+                ReadArticleElementsFromDatabase(article);
+            }
+
+        }
+
+        private void ReadArticleElementsFromDatabase(WebArticle article)
+        {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
                 var allElements = from e in db.LangElements
@@ -40,13 +60,12 @@ namespace Refma.Models
                     dic.Add(e.Value, e);
                 }
             }
-
         }
 
         public static string[] ExtractStringElements(string source)
         {
             string[] stringElements = Regex.Split(source, SpecialCharactersClass.getSplitPattern());
-            return stringElements;
+            return stringElements.Where(s => s!= String.Empty).ToArray();
         }
 
         public List<ViewArticleElement> GetAllViewElements()

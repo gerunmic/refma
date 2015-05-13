@@ -43,8 +43,9 @@
             </td>
 
             <td>
-                @Html.DisplayFor(modelItem => item.Title)<br />
-                <a href="@Html.DisplayFor(modelItem => item.URL)">Source</a>
+               
+               @Html.ActionLink(item.Title, "Read", new { id = item.ID })<br />
+                 <a href="@Html.DisplayFor(modelItem => item.URL)">Source</a>
             </td>
             <td style="text-align:right">
                 @Html.ActionLink("Read", "Read", new { id = item.ID }, new { @type = "button", @class = "btn btn-info" })

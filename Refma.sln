@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Refma", "Refma.csproj", "{13D48AC9-894E-46FE-8CD2-C4B0D4281006}"
 EndProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{377724
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RefmaUnitTestProject", "RefmaUnitTestProject\RefmaUnitTestProject.csproj", "{12AD033B-69B8-4867-924F-53CA1D9783F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{13D48AC9-894E-46FE-8CD2-C4B0D4281006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13D48AC9-894E-46FE-8CD2-C4B0D4281006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13D48AC9-894E-46FE-8CD2-C4B0D4281006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12AD033B-69B8-4867-924F-53CA1D9783F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12AD033B-69B8-4867-924F-53CA1D9783F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12AD033B-69B8-4867-924F-53CA1D9783F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12AD033B-69B8-4867-924F-53CA1D9783F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

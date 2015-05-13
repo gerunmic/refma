@@ -8,10 +8,6 @@
 
 <h2>All Words</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-
-</p>
 
 @using (Html.BeginForm("Index", "LangElement", FormMethod.Get))
 {
@@ -48,7 +44,7 @@
             </td>
             <td style="text-align:right">
                 @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.ID }, new { @type = "button", @class = "btn btn-info" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @type = "button", @class = "btn btn-danger" })
+                @Html.ActionLink("Show Translations", "Index", "LangElementTranslation", new { langElementId = item.ID }, new { @type = "button", @class = "btn btn-warning" })
             </td>
         </tr>
     }
