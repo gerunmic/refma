@@ -78,13 +78,6 @@
 }
 <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
 
-
-@foreach (var file in Directory.GetFiles(Server.MapPath("/images/"), Model.Lang.Code + "-*"))
-{
-
-    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Path.GetFileName(file)) no-repeat; background-size: 30px 30px;"></div>
-}
-
 <h2>@Html.DisplayFor(model => model.Title)</h2>
 
 <div id="percentage"></div>
@@ -135,8 +128,10 @@
             }
         }
     </div>
+</span>
     <br /> 
-</div>
+
+
 <p>
 
     @Html.ActionLink("Back to List", "Index")
