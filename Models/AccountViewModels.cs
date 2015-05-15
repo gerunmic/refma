@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Refma.Models
@@ -27,12 +27,6 @@ namespace Refma.Models
         [Display(Name = "Confirm new password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-
-        [Display(Name = "New target language")]
-        public int? TargetLangId { get; set; }
-        public Lang TargetLang { get; set; }
-
     }
 
     public class LoginViewModel
@@ -68,10 +62,22 @@ namespace Refma.Models
         public string ConfirmPassword { get; set; }
 
         public int LangId { get; set; }
+        [Display(Name = "Source language")]
         public Lang Lang { get; set; }
 
         public int? TargetLangId { get; set; }
+        [Display(Name = "Target language")]
         public Lang TargetLang { get; set; }
     }
+    
+    public class AccountSettingsViewModel
+    {
+        public int LangId { get; set; }
+        [Display(Name = "Source language")]
+        public Lang Lang { get; set; }
 
+        public int? TargetLangId { get; set; }
+        [Display(Name = "Target language")]
+        public Lang TargetLang { get; set; }
+    }
 }
