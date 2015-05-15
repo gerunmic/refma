@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -290,6 +290,83 @@ namespace Refma.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
+            return View(model);
+        }
+
+        //
+        // GET: /Account/AccountSettings
+        //this action is used to display form with data filled in initially.
+        //And also for returning from saving action
+        //this is why we have nullable savedSuccessfully parameter here.
+        //savedSuccesfully will be tru or false, when redirected from Post AccountSettings action
+        public ActionResult AccountSettings(bool? savedSuccesfully)
+        {
+            //fist, we need to find the logged in user data
+            var user = UserManager.FindById(User.Identity.GetUserId());
+
+            ViewBag.ErrorMessage = "";
+
+            List<Lang> langList;
+            using (var db = new ApplicationDbContext())
+            {
+
+                langList = db.Langs.ToList<Lang>();
+            }
+
+            ViewBag.LangList = langList;
+
+            //then create AccountSettingsViewModel with data filled in.
+            //notice that we user user object initialized before
+            AccountSettingsViewModel model = new AccountSettingsViewModel { LangId = user.LangId, TargetLangId = user.TargetLangId };
+
+
+            //the section below defines what happens on the form
+            ViewBag.showForm = true;
+            if (savedSuccesfully != null && savedSuccesfully == true)
+            {
+                ViewBag.showForm = false;
+                ViewBag.StatusMessage = "Data saved sucessfully";
+            }
+            else if (savedSuccesfully != null && savedSuccesfully == false)
+            {
+                ViewBag.showForm = false;
+                ViewBag.ErrorMessage = "Something went wrong!";
+            }
+
+            return View(model);
+        }
+
+
+
+        //
+        // POST: /Account/AccountSettings
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //this action is called when user attempts to save data
+        //therefore it receives AccountSettingsViewModel object
+        public async Task<ActionResult> AccountSettings(AccountSettingsViewModel model)
+        {
+
+            ViewBag.ReturnUrl = Url.Action("AccountSettings");
+
+            if (ModelState.IsValid)
+            {
+                var user = UserManager.FindById(User.Identity.GetUserId());
+                user.LangId = model.LangId;
+                user.TargetLangId = model.TargetLangId;
+
+                IdentityResult result = await UserManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    //if everything is validated and saved successfully,
+                    //we will be redirected to AccountSettings GET action
+                    //where success message will be displayed, but form will be hidden
+                    return RedirectToAction("AccountSettings", new { savedSuccesfully = true });
+                }
+
+            }
+
+            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
