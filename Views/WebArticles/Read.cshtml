@@ -90,8 +90,9 @@
 
             if (@el.IsNotAWord)
             {
-                if (@el.Value == "\n")
+                if (@el.Value.Contains("\n"))
                 {
+                   
                     <br><br>
                 }
                 else
