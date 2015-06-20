@@ -230,6 +230,10 @@
     <Compile Include="Migrations\201506191842180_TranslationResponseField.Designer.cs">
       <DependentUpon>201506191842180_TranslationResponseField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506201312240_removefieldrawresonse.cs" />
+    <Compile Include="Migrations\201506201312240_removefieldrawresonse.Designer.cs">
+      <DependentUpon>201506201312240_removefieldrawresonse.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
@@ -246,6 +250,8 @@
     <Compile Include="Models\WebArticle.cs" />
     <Compile Include="Models\WebArticleElement.cs" />
     <Compile Include="Models\WebtextExtractor.cs" />
+    <Compile Include="Models\PonsDictionaryService.cs" />
+    <Compile Include="Models\PonsResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -392,6 +398,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506191842180_TranslationResponseField.resx">
       <DependentUpon>201506191842180_TranslationResponseField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506201312240_removefieldrawresonse.resx">
+      <DependentUpon>201506201312240_removefieldrawresonse.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

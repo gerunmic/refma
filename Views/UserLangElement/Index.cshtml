@@ -41,6 +41,9 @@
            Language
         </th>
         <th>
+           Listen
+        </th>
+        <th>
            Value
         </th>
         <th>
@@ -56,6 +59,9 @@
         <td>
             @Html.DisplayFor(modelItem => item.LangElement.Lang.Name)  
         </td>
+        <td>
+            <span class="btn-lg glyphicon glyphicon-play-circle" onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')"></span>
+        </td>
          <td>
             @Html.DisplayFor(modelItem => item.LangElement.Value)
         </td>
@@ -64,7 +70,7 @@
         </td>
 
         <td style="text-align:right">
-            <button onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')">Listen</button>
+            
             @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-info" })
             @Html.ActionLink("Show Translations", "Index", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-warning" })
         </td>

@@ -20,8 +20,6 @@ namespace Refma.Models
         [ForeignKey("LangId")]
         public Lang Lang { get; set; }
 
-        public String RawResponse { get; set; }
-
         public String Translation { get; set; }
     }
 }

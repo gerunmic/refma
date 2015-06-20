@@ -25,10 +25,10 @@ namespace Refma.Controllers
             string userId = User.Identity.GetUserId();
             if (userId != null)
             {
+                ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
                 
                 var userWebArticles = from e in db.WebArticles
-                                      from u in db.Users 
-                                      where e.UserId == userId && e.LangId == u.TargetLangId
+                                      where e.UserId == userId && e.LangId == currentUser.TargetLangId
                                       orderby e.ID descending
                                       select e;
                 
@@ -83,7 +83,7 @@ namespace Refma.Controllers
         {
             if (!User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Register", "Account");
+                return RedirectToAction("Login", "Account");
             }
 
             string userId = User.Identity.GetUserId();
