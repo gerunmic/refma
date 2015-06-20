@@ -20,6 +20,7 @@ namespace Refma.Controllers
         // GET: /WebArticles/
         public ActionResult Index()
         {
+            
 
             string userId = User.Identity.GetUserId();
             if (userId != null)
@@ -28,6 +29,7 @@ namespace Refma.Controllers
                 var userWebArticles = from e in db.WebArticles
                                       from u in db.Users 
                                       where e.UserId == userId && e.LangId == u.TargetLangId
+                                      orderby e.ID descending
                                       select e;
                 
 

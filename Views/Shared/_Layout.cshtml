@@ -60,5 +60,29 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    <script>
+    function speak(lang, text, callback) {
+        var u = new SpeechSynthesisUtterance();
+        u.text = text;
+        u.lang = lang;
+
+        u.onend = function () {
+            if (callback) {
+                callback();
+            }
+        };
+
+        u.onerror = function (e) {
+            if (callback) {
+                callback(e);
+            }
+        };
+
+        speechSynthesis.speak(u);
+    }
+    </script>
+
 </body>
 </html>

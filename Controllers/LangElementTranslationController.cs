@@ -29,6 +29,38 @@ namespace Refma.Controllers
             return View(langelementtranslations.ToList());
         }
 
+        public ActionResult RequestTranslation(int langElementId)
+        {
+            String currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+
+            LangElement element = db.LangElements.Where(l => l.LangId== currentUser.TargetLangId && l.ID == langElementId).FirstOrDefault();
+
+           // PonsDemo.PonsDictionaryService service = new PonsDemo.PonsDictionaryService();
+          //  String response = service.getWordRaw(currentUser.Lang.Code, currentUser.TargetLang.Code, element.Value);
+
+
+          //  LangElementTranslation trans = new LangElementTranslation() { LangElementId = element.ID, LangId = currentUser.LangId, RawResponse = response };
+
+            //db.LangElementTranslations.Add(trans);
+            //db.SaveChanges();
+
+            return RedirectToAction("Index");
+
+        }
+
+
+        public JsonResult GetTranslations(int langElementId) {
+            var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
+
+         
+                langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
+                ViewBag.Itemid = langElementId;
+         
+
+            return Json(langelementtranslations.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: /LangElementTranslation/Details/5
         public ActionResult Details(int? id)
         {
@@ -139,10 +171,6 @@ namespace Refma.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-
-
-
 
         protected override void Dispose(bool disposing)
         {

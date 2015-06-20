@@ -226,6 +226,10 @@
     <Compile Include="Migrations\201505082114199_WebArticleRemoveSourceText.Designer.cs">
       <DependentUpon>201505082114199_WebArticleRemoveSourceText.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506191842180_TranslationResponseField.cs" />
+    <Compile Include="Migrations\201506191842180_TranslationResponseField.Designer.cs">
+      <DependentUpon>201506191842180_TranslationResponseField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
@@ -256,6 +260,27 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Icon.png" />
+    <Content Include="images\AL.png" />
+    <Content Include="images\AR.png" />
+    <Content Include="images\BG.png" />
+    <Content Include="images\DE-CH.png" />
+    <Content Include="images\DE.png" />
+    <Content Include="images\EL-CY.png" />
+    <Content Include="images\EL.png" />
+    <Content Include="images\EN.png" />
+    <Content Include="images\ES.png" />
+    <Content Include="images\FI.png" />
+    <Content Include="images\FR.png" />
+    <Content Include="images\HR.png" />
+    <Content Include="images\HY.png" />
+    <Content Include="images\IS.png" />
+    <Content Include="images\IT.png" />
+    <Content Include="images\JP.png" />
+    <Content Include="images\Ka.png" />
+    <Content Include="images\RO.png" />
+    <Content Include="images\SE.png" />
+    <Content Include="images\SQ.png" />
+    <Content Include="images\TR.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -265,6 +290,9 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <None Include="Properties\PublishProfiles\refma.nardobaze.ch - Web Deploy.pubxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.3.js" />
@@ -338,10 +366,12 @@
     <Content Include="Views\LangElementGroup\Details.cshtml" />
     <Content Include="Views\LangElementGroup\Edit.cshtml" />
     <Content Include="Views\LangElementGroup\Index.cshtml" />
+    <Content Include="Views\Account\AccountSettings.cshtml">
+      <SubType>Code</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -359,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505082114199_WebArticleRemoveSourceText.resx">
       <DependentUpon>201505082114199_WebArticleRemoveSourceText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506191842180_TranslationResponseField.resx">
+      <DependentUpon>201506191842180_TranslationResponseField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

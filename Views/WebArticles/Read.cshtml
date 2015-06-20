@@ -9,12 +9,12 @@
 }
 @section CustomJavascript {
     <script type="text/javascript">
-  
+
         $(document).ready(function () {
 
             getPercentageKnown();
 
-            function getPercentageKnown()  {
+            function getPercentageKnown() {
                 var totalWords = $('span').length;
                 var numItemsKnown = $('.Known').length;
                 var percentageKnown = numItemsKnown * 100 / totalWords;
@@ -33,15 +33,15 @@
                 });
             }
 
+
+
+
             function changeClassForElement(eid, new1) {
                 $('span[data-eid="' + eid + '"]').each(function () {
                     $(this).removeClass().addClass(new1);
                 });
             }
 
-            $('[data-toggle="popover"]').popover(
-                    { container: 'body', html: true, placement: 'bottom', title: '', trigger: 'focus' }
-              );
 
             $('body').on('click', 'button#setUnknown', function () {
                 var eid = $(this).attr("data-eid");
@@ -59,7 +59,7 @@
 
             $('body').on('click', 'button#setHard', function () {
                 var eid = $(this).attr("data-eid");
-                
+
                 updateElement(eid, 2);
                 changeClassForElement(eid, "Difficult");
                 getPercentageKnown();
@@ -67,10 +67,27 @@
 
             $('body').on('click', 'button#setKnown', function () {
                 var eid = $(this).attr("data-eid");
-                
+
                 updateElement(eid, 3);
                 changeClassForElement(eid, "Known");
                 getPercentageKnown();
+            });
+
+            $('span').popover({
+                html: 'true',
+                trigger: 'focus',
+                placement: 'bottom',
+                container: 'body',
+                title: function () {
+                    return $(this).html();
+                },
+                content: function () {
+                    return $(this).attr('translation') + '<br>' + 
+                        '<button id="setUnknown" type="button" class="btn btn-danger" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
+                            '<button id="setSeen" type="button" class="btn btn-info" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
+                            '<button id="setHard" type="button" class="btn btn-warning" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
+                              '<button id="setKnown" type="button" class="btn btn-success" data-eid="' + $(this).attr('data-eid') + '">3</button>';
+                }
             });
         });
 
@@ -82,9 +99,9 @@
 
 <div id="percentage"></div>
 <div>
-  
+
     <hr />
-    <span class="main-article">
+    <div class="main-article">
         @foreach (var el in (List<ViewArticleElement>)ViewBag.ViewElements)
         {
 
@@ -92,7 +109,7 @@
             {
                 if (@el.Value.Contains("\n"))
                 {
-                   
+
                     <br><br>
                 }
                 else
@@ -104,37 +121,22 @@
             {
 
                 var dataContent = "";
+
+                
                 if (el.Translations.Count > 0)
                 {
-
-                    foreach (var t in el.Translations)
-                    {
-                        dataContent += dataContent + "<span class=\"translation-item\">" + t + "</span>" + "<br/>";
-                    }
+                    dataContent = el.Translations.First();
                 }
 
-                dataContent += "<button id='setUnknown' type='button' class='btn btn-danger' data-eid='" + @el.LangElementId + "'>0</button>" +
-                               "<button id='setSeen' type='button' class='btn btn-info' data-eid='" + @el.LangElementId + "'>1</button>" +
-                               "<button id='setHard' type='button' class='btn btn-warning' data-eid='" + @el.LangElementId + "'>2</button>" +
-                               "<button id='setKnown' type='button' class='btn btn-success' data-eid='" + @el.LangElementId + "'>3</button>";
-
-                <span data-eid="@el.LangElementId" tabindex="0" data-trigger="focus" data-toggle="popover"
-                      class="word @el.Knowledge"
-                      title="
-                    <b>@el.Value</b>"
-                    data-toggle="popover"
-                    data-content="@dataContent">@el.Value
-                </span>
+                <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
+    
 
             }
         }
     </div>
-</span>
-    <br /> 
-
-
+</div>
+<br />
 <p>
-
     @Html.ActionLink("Back to List", "Index")
 </p>
 

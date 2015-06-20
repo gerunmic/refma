@@ -20,7 +20,6 @@ namespace Refma.Models
         [Required, MinLength(1), MaxLength(450)]
     //    [Index("IX_UQ_ELEMENT", Order=20, IsUnique=true)]
         public string Value { get; set; }
-      
 
 
         public override bool Equals(object obj)
