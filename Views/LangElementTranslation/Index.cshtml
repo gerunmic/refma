@@ -6,9 +6,6 @@
 
 <h2>Translations</h2>
 
-<p>
-    @Html.ActionLink("Add new translation", "Create", new { langElementId = ViewBag.Itemid })
-</p>
 <table class="table">
     <tr>
         <th>
@@ -38,11 +35,11 @@
             @Html.DisplayFor(modelItem => item.Lang.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Translation)
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode( item.Translation))<br /><br />
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @type = "button", @class = "btn btn-info" }) 
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @type = "button", @class = "btn btn-danger" })
+            <a title="Edit" href="@Url.Action("Edit", "LangElementTranslation", new { langElementId = item.LangElementId })" c class="btn-lg glyphicon glyphicon-pencil" style="text-decoration: none !important;" />
+            <a title="Delete" href="@Url.Action("Delete", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;" />
         </td>
     </tr>
 }

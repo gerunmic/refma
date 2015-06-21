@@ -307,12 +307,15 @@ namespace Refma.Controllers
             ViewBag.ErrorMessage = "";
 
             List<Lang> langList;
+            List<Lang> userLangList;
             using (var db = new ApplicationDbContext())
             {
 
                 langList = db.Langs.ToList<Lang>();
+                
             }
 
+      
             ViewBag.LangList = langList;
 
             //then create AccountSettingsViewModel with data filled in.
@@ -335,8 +338,6 @@ namespace Refma.Controllers
 
             return View(model);
         }
-
-
 
         //
         // POST: /Account/AccountSettings
@@ -362,6 +363,7 @@ namespace Refma.Controllers
                     //we will be redirected to AccountSettings GET action
                     //where success message will be displayed, but form will be hidden
                     return RedirectToAction("AccountSettings", new { savedSuccesfully = true });
+                  
                 }
 
             }

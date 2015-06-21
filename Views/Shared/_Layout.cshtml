@@ -67,6 +67,7 @@
         var u = new SpeechSynthesisUtterance();
         u.text = text;
         u.lang = lang;
+        u.rate = 4;
 
         u.onend = function () {
             if (callback) {

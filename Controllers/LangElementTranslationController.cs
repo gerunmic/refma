@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Refma.Models;
 using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace Refma.Controllers
 {
@@ -25,7 +26,7 @@ namespace Refma.Controllers
                 langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
                 ViewBag.Itemid = langElementId;
             }
-            
+
             return View(langelementtranslations.ToList());
         }
 
@@ -34,29 +35,64 @@ namespace Refma.Controllers
             String currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
 
-            LangElement element = db.LangElements.Where(l => l.LangId== currentUser.TargetLangId && l.ID == langElementId).FirstOrDefault();
+            LangElement element = db.LangElements.Where(l => l.LangId == currentUser.TargetLangId && l.ID == langElementId).FirstOrDefault();
 
-           // PonsDemo.PonsDictionaryService service = new PonsDemo.PonsDictionaryService();
-          //  String response = service.getWordRaw(currentUser.Lang.Code, currentUser.TargetLang.Code, element.Value);
+            PonsDictionaryService service = new PonsDictionaryService();
+            List<PonsResponse> responses = service.getTranslation(currentUser, element);
 
+            if (responses != null)
+            {
+                RawTranslationResponse rawResponse = new RawTranslationResponse() { LangElementId = element.ID, LangId = currentUser.LangId, Provider = "pons" };
 
-          //  LangElementTranslation trans = new LangElementTranslation() { LangElementId = element.ID, LangId = currentUser.LangId, RawResponse = response };
+                rawResponse.Response = JsonConvert.SerializeObject(responses);
+                db.RawTranslationReponses.Add(rawResponse);
 
-            //db.LangElementTranslations.Add(trans);
-            //db.SaveChanges();
+                foreach (var item in responses)
+                {
+                    foreach (var hit in item.Hits)
+                    {
+                        if (hit.Type == "entry")
+                        {
+                            foreach (var rom in hit.Roms)
+                            {
+                                foreach (var arab in rom.Arabs)
+                                {
+                                    foreach (var trans in arab.Translations)
+                                    {
+                                        LangElementTranslation newElement = new LangElementTranslation() { LangId = currentUser.LangId, LangElementId = element.ID, Translation = trans.Source + "; " + trans.Target };
+                                        db.LangElementTranslations.Add(newElement);
+                                    }
+                                }
+                            }
+                        }
+                        else if (hit.Type == "translation")
+                        {
+                            LangElementTranslation newElement = new LangElementTranslation() { LangId = currentUser.LangId, LangElementId = element.ID, Translation = hit.Source + "; "+ hit.Target };
+                            db.LangElementTranslations.Add(newElement);
+                        }
 
-            return RedirectToAction("Index");
+                    }
+
+                }
+                db.SaveChanges();
+
+            }
+
+            return RedirectToAction("Index", new { langElementId = element.ID });
 
         }
 
 
-        public JsonResult GetTranslations(int langElementId) {
+
+
+        public JsonResult GetTranslations(int langElementId)
+        {
             var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
 
-         
-                langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
-                ViewBag.Itemid = langElementId;
-         
+
+            langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
+            ViewBag.Itemid = langElementId;
+
 
             return Json(langelementtranslations.ToList(), JsonRequestBehavior.AllowGet);
         }
@@ -92,7 +128,7 @@ namespace Refma.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,LangElementId,LangId,Translation")] LangElementTranslation langelementtranslation)
+        public ActionResult Create([Bind(Include = "Id,LangElementId,LangId,Translation")] LangElementTranslation langelementtranslation)
         {
             if (ModelState.IsValid)
             {
@@ -133,7 +169,7 @@ namespace Refma.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,LangElementId,LangId,Translation")] LangElementTranslation langelementtranslation)
+        public ActionResult Edit([Bind(Include = "Id,LangElementId,LangId,Translation")] LangElementTranslation langelementtranslation)
         {
             if (ModelState.IsValid)
             {

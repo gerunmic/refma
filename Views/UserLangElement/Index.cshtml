@@ -14,6 +14,7 @@
         Find: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
+    
 }
 
 
@@ -36,10 +37,6 @@
 </p>
 <table class="table">
     <tr>
-
-        <th> 
-           Language
-        </th>
         <th>
            Listen
         </th>
@@ -53,16 +50,15 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-       
+@foreach (var item in Model)
+{
+    <tr data-eid="@item.LangElementId">
+
         <td>
-            @Html.DisplayFor(modelItem => item.LangElement.Lang.Name)  
+            <a onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')" title="Listen" href="javascript:;" class="btn-lg glyphicon glyphicon-play-circle" style="text-decoration: none !important;" />
         </td>
         <td>
-            <span class="btn-lg glyphicon glyphicon-play-circle" onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')"></span>
-        </td>
-         <td>
+
             @Html.DisplayFor(modelItem => item.LangElement.Value)
         </td>
         <td>
@@ -70,9 +66,9 @@
         </td>
 
         <td style="text-align:right">
-            
-            @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-info" })
-            @Html.ActionLink("Show Translations", "Index", "LangElementTranslation", new { langElementId = item.LangElementId }, new { @type = "button", @class = "btn btn-warning" })
+            <a title="Request translations" href="@Url.Action("RequestTranslation", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-cloud" style="text-decoration: none !important;" />
+            <a title="Add custom translations" href="@Url.Action("Create", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-plus-sign" style="text-decoration: none !important;" />
+            <a title="Show all translations" href="@Url.Action("Index", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-th-list" style="text-decoration: none !important;" />
         </td>
     </tr>
 }
@@ -82,5 +78,4 @@
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page,  currentFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page,  currentFilter = ViewBag.CurrentFilter, knowledge = ViewBag.Knowledge }))

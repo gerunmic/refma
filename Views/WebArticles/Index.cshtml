@@ -7,17 +7,12 @@
 <h2>My Articles</h2>
 
 <p>
-    @Html.ActionLink("Add new article", "Create")
+    @Html.ActionLink("Add new article", "Create", new  { }, new  { @type="button", @class = "btn btn-default" })
 </p>
 
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Lang)
-        </th>
-        <th>
 
-        </th>
         <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
@@ -27,22 +22,19 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lang.Name)
-            </td>
-            <td>
 
-                <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@item.Lang.ImageBig) no-repeat; background-size: 30px 30px;"></div>
-            </td>
 
             <td>
                
-               @Html.ActionLink(item.Title, "Read", new { id = item.ID })<br />
+                <b>@Html.ActionLink(item.Title, "Read", new { id = item.ID }) </b> <br />
                  <a href="@Html.DisplayFor(modelItem => item.URL)">Source</a>
             </td>
             <td style="text-align:right">
-                @Html.ActionLink("Read", "Read", new { id = item.ID }, new { @type = "button", @class = "btn btn-info" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @type = "button", @class = "btn btn-danger" })
+              
+                <a href="@Url.Action("Delete", new { id = item.ID })">
+                    <i class="btn-lg glyphicon glyphicon-remove"></i>
+                    <span class="sr-only">Delete</span>
+                </a>
             </td>
         </tr>
     }

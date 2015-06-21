@@ -43,8 +43,8 @@
                 @Html.DisplayFor(modelItem => item.Value)
             </td>
             <td style="text-align:right">
-                @Html.ActionLink("Translate", "Create", "LangElementTranslation", new { langElementId = item.ID }, new { @type = "button", @class = "btn btn-info" })
-                @Html.ActionLink("Show Translations", "Index", "LangElementTranslation", new { langElementId = item.ID }, new { @type = "button", @class = "btn btn-warning" })
+                <a title="Add custom translations" href="@Url.Action("Create", "LangElementTranslation", new { langElementId = item.ID })" class="btn-lg glyphicon glyphicon-plus-sign" style="text-decoration: none !important;" />
+                <a title="Show all translations" href="@Url.Action("Index", "LangElementTranslation", new { langElementId = item.ID })" class="btn-lg glyphicon glyphicon-th-list" style="text-decoration: none !important;" />
             </td>
         </tr>
     }

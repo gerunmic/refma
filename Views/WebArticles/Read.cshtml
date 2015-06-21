@@ -9,99 +9,102 @@
 }
 @section CustomJavascript {
     <script type="text/javascript">
-       
-    var currentLang = @Html.Raw(Json.Encode(Model.Lang.Code));
 
-    $(document).ready(function () {
+        var currentLang = @Html.Raw(Json.Encode(Model.Lang.Code));
+
+        $(document).ready(function () {
 
 
 
-        getPercentageKnown();
+            getPercentageKnown();
 
-        function getPercentageKnown() {
-            var totalWords = $('span').length;
-            var numItemsKnown = $('.Known').length;
-            var percentageKnown = numItemsKnown * 100 / totalWords;
+            function getPercentageKnown() {
+                var totalWords = $('span').length;
+                var numItemsKnown = $('.Known').length;
+                var percentageKnown = numItemsKnown * 100 / totalWords;
 
-            $('div#percentage').html(Math.round(percentageKnown) + "% words known in this article.");
-        }
+                $('div#percentage').html(Math.round(percentageKnown) + "% words known in this article.");
+            }
 
-        function updateElement(eid, k) {
-            $.ajax({
-                type: "POST",
-                url: '/LangElement/UpdateElementJSON',
-                data: { elementid: eid, knowledge: k },
-                success: function () {
-                    // do not do anything
+            function updateElement(eid, k) {
+                $.ajax({
+                    type: "POST",
+                    url: '/LangElement/UpdateElementJSON',
+                    data: { elementid: eid, knowledge: k },
+                    success: function () {
+                        // do not do anything
+                    }
+                });
+            }
+
+            function changeClassForElement(eid, new1) {
+                $('span[data-eid="' + eid + '"]').each(function () {
+                    $(this).removeClass().addClass(new1);
+                });
+            }
+
+
+            $('body').on('click', 'button#setUnknown', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 0);
+                changeClassForElement(eid, "Unknown");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setSeen', function () {
+                var eid = $(this).attr("data-eid");
+                updateElement(eid, 1);
+                changeClassForElement(eid, "Seen");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setHard', function () {
+                var eid = $(this).attr("data-eid");
+
+                updateElement(eid, 2);
+                changeClassForElement(eid, "Difficult");
+                getPercentageKnown();
+            });
+
+            $('body').on('click', 'button#setKnown', function () {
+                var eid = $(this).attr("data-eid");
+
+                updateElement(eid, 3);
+                changeClassForElement(eid, "Known");
+                getPercentageKnown();
+            });
+
+            $('span').popover({
+                html: 'true',
+                trigger: 'focus',
+                placement: 'bottom',
+                container: 'body',
+                title: function () {
+                    return $(this).html() +  " <span class=\"glyphicon glyphicon-play-circle\" onclick=\"speak('"+currentLang +"','" + $(this).html() + "')\"></span>" ;
+                },
+                content: function () {
+                    return $(this).attr('translation') + '<br>' +
+                        '<button id="setUnknown" type="button" class="btn btn-danger" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
+                            '<button id="setSeen" type="button" class="btn btn-info" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
+                            '<button id="setHard" type="button" class="btn btn-warning" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
+                              '<button id="setKnown" type="button" class="btn btn-success" data-eid="' + $(this).attr('data-eid') + '">3</button>';
                 }
             });
-        }
-
-        function changeClassForElement(eid, new1) {
-            $('span[data-eid="' + eid + '"]').each(function () {
-                $(this).removeClass().addClass(new1);
-            });
-        }
-
-
-        $('body').on('click', 'button#setUnknown', function () {
-            var eid = $(this).attr("data-eid");
-            updateElement(eid, 0);
-            changeClassForElement(eid, "Unknown");
-            getPercentageKnown();
         });
-
-        $('body').on('click', 'button#setSeen', function () {
-            var eid = $(this).attr("data-eid");
-            updateElement(eid, 1);
-            changeClassForElement(eid, "Seen");
-            getPercentageKnown();
-        });
-
-        $('body').on('click', 'button#setHard', function () {
-            var eid = $(this).attr("data-eid");
-
-            updateElement(eid, 2);
-            changeClassForElement(eid, "Difficult");
-            getPercentageKnown();
-        });
-
-        $('body').on('click', 'button#setKnown', function () {
-            var eid = $(this).attr("data-eid");
-
-            updateElement(eid, 3);
-            changeClassForElement(eid, "Known");
-            getPercentageKnown();
-        });
-
-        $('span').popover({
-            html: 'true',
-            trigger: 'focus',
-            placement: 'bottom',
-            container: 'body',
-            title: function () {
-                return $(this).html() +  " <span class=\"glyphicon glyphicon-play-circle\" onclick=\"speak('"+currentLang +"','" + $(this).html() + "')\"></span>" ;
-                },
-            content: function () {
-                return $(this).attr('translation') + '<br>' +
-                    '<button id="setUnknown" type="button" class="btn btn-danger" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
-                        '<button id="setSeen" type="button" class="btn btn-info" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
-                        '<button id="setHard" type="button" class="btn btn-warning" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
-                          '<button id="setKnown" type="button" class="btn btn-success" data-eid="' + $(this).attr('data-eid') + '">3</button>';
-            }
-        });
-    });
 
     </script>
 }
 <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
 
 <h2>@Html.DisplayFor(model => model.Title)</h2>
+<span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.Lang.Code','@Model.Title')"></span>
 
 <div id="percentage"></div>
 <div>
 
     <hr />
+
+
     <div class="main-article">
         @foreach (var el in (List<ViewArticleElement>)ViewBag.ViewElements)
         {
@@ -123,14 +126,18 @@
 
                 var dataContent = "";
 
-                
+
                 if (el.Translations.Count > 0)
                 {
-                    dataContent = el.Translations.First();
+                    foreach (var item in el.Translations)
+                    {
+                        dataContent += item + "<br>";
+                    }
+
                 }
 
                 <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
-    
+
 
             }
         }

@@ -114,7 +114,7 @@ namespace Refma.Controllers
                     // first, save article to get Id
                     string title;
                     webarticle.PlainText = WebtextExtractor.ExtractTextOnly(webarticle.URL, out title);
-                    webarticle.Title = webarticle.Title + title;
+                    webarticle.Title = System.Web.HttpUtility.HtmlDecode(webarticle.Title + title);
                     db.WebArticles.Add(webarticle);
                     db.SaveChanges();
                     // end saving article, id known nown

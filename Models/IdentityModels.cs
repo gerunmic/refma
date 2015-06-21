@@ -25,14 +25,17 @@ namespace Refma.Models
         public DbSet<LangElement> LangElements { get; set; }
         public DbSet<LangElementTranslation> LangElementTranslations { get; set; }
         public DbSet<UserLangElement> UserLangElements { get; set; }
-        
+
         public DbSet<WebArticle> WebArticles { get; set; }
         public DbSet<WebArticleElement> WebArticleElements { get; set; }
         public DbSet<Lang> Langs { get; set; }
         public DbSet<LangElementGroup> LangElementGroups { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        public ApplicationDbContext() : base("DefaultConnection")
+        public DbSet<RawTranslationResponse> RawTranslationReponses { get; set; }
+
+        public ApplicationDbContext()
+            : base("DefaultConnection")
         {
 
         }
@@ -62,6 +65,11 @@ namespace Refma.Models
                 .WithMany()
                 .WillCascadeOnDelete(false);
 
+            modelBuilder.Entity<RawTranslationResponse>()
+                .HasRequired(c => c.Lang)
+                .WithMany()
+                .WillCascadeOnDelete(false);
+
             modelBuilder.Entity<LangElementGroup>()
                 .HasRequired(c => c.Lexeme)
                 .WithMany()
@@ -72,10 +80,10 @@ namespace Refma.Models
                 .WithMany(l => l.LangElementGroups)
                 .Map(tl =>
                 {
-                    tl.MapLeftKey(new string[] {"LexemeId", "LangElementId"});
+                    tl.MapLeftKey(new string[] { "LexemeId", "LangElementId" });
                     tl.MapRightKey("Id");
                     tl.ToTable("LangElementGroupTag");
-                    
+
                 });
         }
 

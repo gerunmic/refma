@@ -41,6 +41,7 @@ namespace Refma.Controllers
             ViewBag.CountSeen = userlangelements.Where(u => u.Knowledge == Knowledge.Seen).Count();
             ViewBag.CountDifficult = userlangelements.Where(u => u.Knowledge == Knowledge.Difficult).Count();
             ViewBag.CountKnown = userlangelements.Where(u => u.Knowledge == Knowledge.Known).Count();
+            ViewBag.Knowledge = knowledge;
 
             if (!String.IsNullOrEmpty(searchString))
             {
