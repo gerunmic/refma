@@ -82,9 +82,6 @@ namespace Refma.Controllers
 
         }
 
-
-
-
         public JsonResult GetTranslations(int langElementId)
         {
             var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);

@@ -34,6 +34,8 @@ namespace Refma.Models
 
         public DbSet<RawTranslationResponse> RawTranslationReponses { get; set; }
 
+        public DbSet<Sentence> Sentences { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

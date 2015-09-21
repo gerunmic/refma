@@ -14,14 +14,14 @@
         Find: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </p>
-    
+
 }
 
 
-<table class="table text-center">
+<table class="table text-center" dir="auto">
     <tr>
         <th class="danger text-center">@Html.ActionLink("Unknown", "Index", new { knowledge = 0 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 0 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
-        <th class="info text-center">@Html.ActionLink("Seen", "Index", new { knowledge = 1 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId,  knowledge = 1 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
+        <th class="info text-center">@Html.ActionLink("Seen", "Index", new { knowledge = 1 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 1 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
         <th class="warning text-center">@Html.ActionLink("Difficult", "Index", new { knowledge = 2 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 2 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
         <th class="success text-center">@Html.ActionLink("Known", "Index", new { knowledge = 3 }) <br />  @Html.ActionLink("JSON", "ExportJSON", new { langId = ViewBag.TargetLangId, knowledge = 3 }, new { @type = "button", @class = "btn btn-warning btn-xs" })</th>
     </tr>
@@ -32,50 +32,51 @@
         <td>@ViewBag.CountKnown</td>
     </tr>
 </table>
+
 <p>
 
 </p>
 <table class="table">
     <tr>
         <th>
-           Listen
+            Listen
         </th>
         <th>
-           Value
+            Value
         </th>
         <th>
-           Knowledge
+            Knowledge
         </th>
 
         <th></th>
     </tr>
 
-@foreach (var item in Model)
-{
-    <tr data-eid="@item.LangElementId">
+    @foreach (var item in Model)
+    {
+        <tr data-eid="@item.LangElementId">
 
-        <td>
-            <a onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')" title="Listen" href="javascript:;" class="btn-lg glyphicon glyphicon-play-circle" style="text-decoration: none !important;" />
-        </td>
-        <td>
+            <td>
+                <a onclick="speak('@item.LangElement.Lang.Code','@item.LangElement.Value')" title="Listen" href="javascript:;" class="btn-lg glyphicon glyphicon-play-circle" style="text-decoration: none !important;" />
+            </td>
+            <td style="vertical-align:middle !important">
 
-            @Html.DisplayFor(modelItem => item.LangElement.Value)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Knowledge)
-        </td>
+                @Html.DisplayFor(modelItem => item.LangElement.Value)
+            </td>
+            <td style="vertical-align:middle !important">
+                @Html.DisplayFor(modelItem => item.Knowledge)
+            </td>
 
-        <td style="text-align:right">
-            <a title="Request translations" href="@Url.Action("RequestTranslation", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-cloud" style="text-decoration: none !important;" />
-            <a title="Add custom translations" href="@Url.Action("Create", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-plus-sign" style="text-decoration: none !important;" />
-            <a title="Show all translations" href="@Url.Action("Index", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-th-list" style="text-decoration: none !important;" />
-        </td>
-    </tr>
-}
+            <td style="text-align:right">
+                <a title="Request translations" href="@Url.Action("RequestTranslation", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-cloud" style="text-decoration: none !important;" />
+                <a title="Add custom translations" href="@Url.Action("Create", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-plus-sign" style="text-decoration: none !important;" />
+                <a title="Show all translations" href="@Url.Action("Index", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-th-list" style="text-decoration: none !important;" />
+            </td>
+        </tr>
+    }
 
 </table>
 
 <br />
 Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page,  currentFilter = ViewBag.CurrentFilter, knowledge = ViewBag.Knowledge }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter, knowledge = ViewBag.Knowledge }))

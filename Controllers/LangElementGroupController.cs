@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Refma.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Refma.Controllers
 {
@@ -40,8 +41,11 @@ namespace Refma.Controllers
         // GET: /LangElementGroup/Create
         public ActionResult Create()
         {
-            ViewBag.LangElementId = new SelectList(db.LangElements, "ID", "Value");
-            ViewBag.LexemeId = new SelectList(db.LangElements, "ID", "Value");
+            String currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+            var langElements = db.LangElements.Where(e => e.LangId == currentUser.TargetLangId);
+            ViewBag.LangElementId = new SelectList(langElements.ToList(), "ID", "Value");
+            ViewBag.LexemeId = new SelectList(langElements.ToList(), "ID", "Value");
             return View();
         }
 

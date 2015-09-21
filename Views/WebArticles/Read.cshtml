@@ -94,14 +94,16 @@
 
     </script>
 }
-<div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
 
-<h2>@Html.DisplayFor(model => model.Title)</h2>
-<span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.Lang.Code','@Model.Title')"></span>
 
-<div id="percentage"></div>
-<div>
+<div dir="auto" lang="@Model.Lang.Code">
+    <div style="display: inline-block; width: 30px; height: 30px;  border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; background: url(/images/@Model.Lang.ImageSmall) no-repeat; background-size: 30px 30px;"></div>
 
+    <h2>@Html.DisplayFor(model => model.Title)</h2>
+
+    <span class="glyphicon glyphicon-play-circle" onclick="speak('@Model.Lang.Code','@Model.Title')"></span>
+
+    <div id="percentage"></div>
     <hr />
 
 
@@ -142,9 +144,11 @@
             }
         }
     </div>
-</div>
-<br />
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
+    <br />
+
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>

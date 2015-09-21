@@ -193,8 +193,6 @@ namespace Refma.Controllers
             return Json(jsonObjects, JsonRequestBehavior.AllowGet);
         }
 
-        
-
 
         protected override void Dispose(bool disposing)
         {

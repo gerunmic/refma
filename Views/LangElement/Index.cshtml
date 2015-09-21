@@ -19,7 +19,7 @@
         <input type="submit" value="Filter" />
     </p>
 }
-  
+
 
 
 <table class="table">
@@ -27,6 +27,7 @@
         <th>
             Language
         </th>
+
         <th>
             Value
         </th>
@@ -36,10 +37,14 @@
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <td style="vertical-align:middle !important">
+
+                <img src="/images/@item.Lang.ImageBig" style="border-radius: 80% 80% 80% 80%;width: 20px;height:20px" />
+                <span> </span>
                 @Html.DisplayFor(modelItem => item.Lang.Name)
             </td>
-            <td>
+
+            <td style="vertical-align:middle !important">
                 @Html.DisplayFor(modelItem => item.Value)
             </td>
             <td style="text-align:right">
