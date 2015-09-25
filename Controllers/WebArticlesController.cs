@@ -10,6 +10,8 @@ using System;
 using System.Text.RegularExpressions;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using System.Web.Configuration;
+using PagedList;
 
 namespace Refma.Controllers
 {
@@ -18,24 +20,42 @@ namespace Refma.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /WebArticles/
-        public ActionResult Index()
+        public ActionResult Index(string currentFilter, string searchString, int? page)
         {
             
             string userId = User.Identity.GetUserId();
             if (userId != null)
             {
-                
+                int defaultPageSize =  Int32.Parse(WebConfigurationManager.AppSettings["defaultPageSize"]);
+
                 ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
                 ViewBag.LangCode = currentUser.TargetLang.Code;
 
+               
                 var userWebArticles = from e in db.WebArticles
                                       where e.UserId == userId && e.LangId == currentUser.TargetLangId
-                                      orderby e.ID descending
+                                     // orderby e.ID descending
                                       select e;
-                
 
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    userWebArticles = userWebArticles.Where(s => s.Title.Contains(searchString));
+                }
 
-                return View(userWebArticles);
+                if (searchString != null)
+                {
+                    page = 1;
+                }
+                else
+                {
+                    searchString = currentFilter;
+                }
+
+                ViewBag.CurrentFilter = searchString;
+
+                int pageNumber = (page ?? 1);
+
+                return View(userWebArticles.OrderByDescending(u => u.ID).ToPagedList(pageNumber, defaultPageSize));
             }
             return View();// show nothing
         }

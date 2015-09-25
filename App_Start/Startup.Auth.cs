@@ -13,6 +13,7 @@ namespace Refma
             // Enable the application to use a cookie to store information for the signed in user
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                ExpireTimeSpan = System.TimeSpan.FromHours(6),
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login")
             });

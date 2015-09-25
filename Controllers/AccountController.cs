@@ -24,6 +24,7 @@ namespace Refma.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+          
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
@@ -307,7 +308,7 @@ namespace Refma.Controllers
             ViewBag.ErrorMessage = "";
 
             List<Lang> langList;
-            List<Lang> userLangList;
+            // List<Lang> userLangList;
             using (var db = new ApplicationDbContext())
             {
 
