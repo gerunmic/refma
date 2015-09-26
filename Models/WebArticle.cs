@@ -17,6 +17,7 @@ namespace Refma.Models
         public String URL { get; set; }
         public String PlainText { get; set; }
         public string UserId { get; set; }
+        public double? PercentageKnown { get; set; }
         [ForeignKey("UserId")]
         public virtual ApplicationUser User { get; set; }
     }

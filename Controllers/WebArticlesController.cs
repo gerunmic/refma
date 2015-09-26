@@ -213,6 +213,20 @@ namespace Refma.Controllers
             return RedirectToAction("Index");
         }
 
+        public JsonResult UpdatePercentage(int id, double percentage)
+        {
+            string currentUserId = User.Identity.GetUserId();
+            WebArticle a = db.WebArticles.Where(u => u.ID == id && u.UserId == currentUserId).FirstOrDefault();
+           
+            if (a != null)
+            {
+                a.PercentageKnown = percentage;
+            };
+            db.WebArticles.AddOrUpdate(a);
+            db.SaveChangesAsync();
+            return Json(a.PercentageKnown, JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

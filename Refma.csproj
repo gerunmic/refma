@@ -253,6 +253,10 @@
     <Compile Include="Migrations\201507191250408_Sentence Model.Designer.cs">
       <DependentUpon>201507191250408_Sentence Model.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509261118583_percentage-property.cs" />
+    <Compile Include="Migrations\201509261118583_percentage-property.Designer.cs">
+      <DependentUpon>201509261118583_percentage-property.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
@@ -440,6 +444,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507191250408_Sentence Model.resx">
       <DependentUpon>201507191250408_Sentence Model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509261118583_percentage-property.resx">
+      <DependentUpon>201509261118583_percentage-property.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

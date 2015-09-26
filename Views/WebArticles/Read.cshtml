@@ -11,6 +11,7 @@
     <script type="text/javascript">
 
         var currentLang = @Html.Raw(Json.Encode(Model.Lang.Code));
+        var currentArticleID = @Model.ID;
 
         $(document).ready(function () {
 
@@ -24,6 +25,8 @@
                 var percentageKnown = numItemsKnown * 100 / totalWords;
 
                 $('div#percentage').html(Math.round(percentageKnown) + "% words known in this article.");
+
+                savePercentage(currentArticleID, Math.round(percentageKnown));
             }
 
             function updateElement(eid, k) {
@@ -31,6 +34,17 @@
                     type: "POST",
                     url: '/LangElement/UpdateElementJSON',
                     data: { elementid: eid, knowledge: k },
+                    success: function () {
+                        // do not do anything
+                    }
+                });
+            }
+
+            function savePercentage(aid, p) {
+                $.ajax({
+                    type: "POST",
+                    url: '/WebArticles/UpdatePercentage',
+                    data: { id: aid, percentage: p },
                     success: function () {
                         // do not do anything
                     }
