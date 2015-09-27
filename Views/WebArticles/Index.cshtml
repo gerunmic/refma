@@ -1,10 +1,20 @@
-﻿@model IEnumerable<Refma.Models.WebArticle>
-
+﻿@model PagedList.IPagedList<Refma.Models.WebArticle>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewBag.Title = "My Articles";
 }
 
 <h2>My Articles</h2>
+
+@using (Html.BeginForm("Index", "WebArticles", FormMethod.Get))
+{
+    <p>
+        Find: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+
+}
 
 <p>
     @Html.ActionLink("Add new article", "Create", new { }, new { @type = "button", @class = "btn btn-default" })
@@ -12,30 +22,39 @@
 
 <table class="table" dir="auto" lang="@ViewBag.LangCode">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td style="vertical-align:middle !important">
+ 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align:middle !important">
 
-                <b>@Html.ActionLink(item.Title, "Read", new { id = item.ID }) </b>
+                    <b>@Html.ActionLink(item.Title, "Read", new { id = item.ID }) </b>
+                    @if (item.PercentageKnown.HasValue)
+                    {
+                        <span class="label label-info">@item.PercentageKnown%</span>
+                    }
 
-            </td>
-            <td style="text-align:right">
+                </td>
+                <td style="text-align:right">
 
-                @if (item.URL != null)
-                {
+                    @if (item.URL != null)
+                    {
 
-                    <a title="Source" href="@Html.DisplayFor(modelItem => item.URL)" class="btn-lg glyphicon glyphicon-link" style="text-decoration: none !important;">
-                        <span class="sr-only">Source</span>
+                        <a title="Source" href="@Html.DisplayFor(modelItem => item.URL)" class="btn-lg glyphicon glyphicon-link" style="text-decoration: none !important;">
+                            <span class="sr-only">Source</span>
+                        </a>
+
+                    }
+
+                    <a title="Delete" href="@Url.Action("Delete", new { id = item.ID })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;">
+                        <span class="sr-only">Delete</span>
                     </a>
-
-                }
-
-                <a title="Delete" href="@Url.Action("Delete", new { id = item.ID })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;">
-                    <span class="sr-only">Delete</span>
-                </a>
-            </td>
-        </tr>
-    }
+                </td>
+            </tr>
+        }
 
 </table>
+
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
