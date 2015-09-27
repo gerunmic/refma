@@ -15,8 +15,6 @@
 
         $(document).ready(function () {
 
-
-
             getPercentageKnown();
 
             function getPercentageKnown() {
@@ -141,8 +139,6 @@
             {
 
                 var dataContent = "";
-
-
                 if (el.Translations.Count > 0)
                 {
                     foreach (var item in el.Translations)
@@ -151,9 +147,8 @@
                     }
 
                 }
-
+ 
                 <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
-
 
             }
         }

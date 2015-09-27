@@ -19,6 +19,9 @@ body {
     padding-right: 15px;
 }
 
+.navbar-inverse { background-color: #1caff6 !important; }
+.navbar-inverse .navbar-nav>li>a  { color: #ffffff !important; }
+.navbar-brand { color: #ffffff !important; }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,

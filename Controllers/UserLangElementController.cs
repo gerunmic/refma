@@ -193,6 +193,13 @@ namespace Refma.Controllers
             return Json(jsonObjects, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetUserTargetLanguages()
+        {
+            string currentUserId = User.Identity.GetUserId();
+            var languages = db.WebArticles.Where(u => u.UserId == currentUserId).Select(l => new { l.LangId, l.Lang.ImageSmall }).Distinct();
+            return Json(languages.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

@@ -56,6 +56,8 @@ namespace Refma.Controllers
                 int pageNumber = (page ?? 1);
 
                 return View(userWebArticles.OrderByDescending(u => u.ID).ToPagedList(pageNumber, defaultPageSize));
+
+                
             }
             return View();// show nothing
         }
@@ -223,7 +225,7 @@ namespace Refma.Controllers
                 a.PercentageKnown = percentage;
             };
             db.WebArticles.AddOrUpdate(a);
-            db.SaveChangesAsync();
+            db.SaveChanges();
             return Json(a.PercentageKnown, JsonRequestBehavior.AllowGet);
         }
 

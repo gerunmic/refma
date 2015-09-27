@@ -22,35 +22,36 @@
 
 <table class="table" dir="auto" lang="@ViewBag.LangCode">
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td style="vertical-align:middle !important">
+ 
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="vertical-align:middle !important">
 
-                <b>@Html.ActionLink(item.Title, "Read", new { id = item.ID }) </b>
-                @if (item.PercentageKnown.HasValue)
-                {
-                    <span class="label label-info">@item.PercentageKnown%</span> 
-                }
+                    <b>@Html.ActionLink(item.Title, "Read", new { id = item.ID }) </b>
+                    @if (item.PercentageKnown.HasValue)
+                    {
+                        <span class="label label-info">@item.PercentageKnown%</span>
+                    }
 
-            </td>
-            <td style="text-align:right">
+                </td>
+                <td style="text-align:right">
 
-                @if (item.URL != null)
-                {
+                    @if (item.URL != null)
+                    {
 
-                    <a title="Source" href="@Html.DisplayFor(modelItem => item.URL)" class="btn-lg glyphicon glyphicon-link" style="text-decoration: none !important;">
-                        <span class="sr-only">Source</span>
+                        <a title="Source" href="@Html.DisplayFor(modelItem => item.URL)" class="btn-lg glyphicon glyphicon-link" style="text-decoration: none !important;">
+                            <span class="sr-only">Source</span>
+                        </a>
+
+                    }
+
+                    <a title="Delete" href="@Url.Action("Delete", new { id = item.ID })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;">
+                        <span class="sr-only">Delete</span>
                     </a>
-
-                }
-
-                <a title="Delete" href="@Url.Action("Delete", new { id = item.ID })" class="btn-lg glyphicon glyphicon-remove" style="text-decoration: none !important;">
-                    <span class="sr-only">Delete</span>
-                </a>
-            </td>
-        </tr>
-    }
+                </td>
+            </tr>
+        }
 
 </table>
 

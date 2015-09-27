@@ -329,7 +329,7 @@ namespace Refma.Controllers
             if (savedSuccesfully != null && savedSuccesfully == true)
             {
                 ViewBag.showForm = false;
-                ViewBag.StatusMessage = "Data saved sucessfully";
+                return Redirect(Request.UrlReferrer.AbsoluteUri);
             }
             else if (savedSuccesfully != null && savedSuccesfully == false)
             {
@@ -399,6 +399,9 @@ namespace Refma.Controllers
             ViewBag.ShowRemoveButton = HasPassword() || linkedAccounts.Count > 1;
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
+
+
+
 
         protected override void Dispose(bool disposing)
         {
