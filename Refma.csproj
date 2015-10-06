@@ -656,6 +656,7 @@
     <Content Include="Views\Sentences\Details.cshtml" />
     <Content Include="Views\Sentences\Edit.cshtml" />
     <Content Include="Views\Sentences\Index.cshtml" />
+    <Content Include="Views\WebArticles\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
