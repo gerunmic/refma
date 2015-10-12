@@ -257,7 +257,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
+    <Compile Include="Models\GlosbeDictionaryService.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IDictionaryService.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\LangElement.cs" />

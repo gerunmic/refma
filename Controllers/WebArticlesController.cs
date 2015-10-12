@@ -83,7 +83,9 @@ namespace Refma.Controllers
 
                 var freqList = from w in db.WebArticleElements
                                join e in db.LangElements on w.LangElementId equals e.ID into temp
+                            
                                from t in temp.DefaultIfEmpty()
+                               where t.LangId.Equals(userTargetCode)
                                group t by new { t.Lang.Name, t.Value, w.LangElementId } into g
                                select new FrequencyModel
                                {
@@ -94,7 +96,7 @@ namespace Refma.Controllers
                                };
 
 
-                return View(freqList.OrderByDescending(f => f.Occurences).Take(100).ToList());
+                return View(freqList.OrderByDescending(f => f.Occurences).Take(500).ToList());
             }
 
             return View();

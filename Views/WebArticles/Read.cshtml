@@ -96,10 +96,10 @@
                 },
                 content: function () {
                     return $(this).attr('translation') + '<br>' +
-                        '<button id="setUnknown" type="button" class="btn btn-danger" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
-                            '<button id="setSeen" type="button" class="btn btn-info" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
-                            '<button id="setHard" type="button" class="btn btn-warning" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
-                              '<button id="setKnown" type="button" class="btn btn-success" data-eid="' + $(this).attr('data-eid') + '">3</button>';
+                        '<button id="setUnknown" type="button" class="btn btn-unknown" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
+                            '<button id="setSeen" type="button" class="btn btn-seen" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
+                            '<button id="setHard" type="button" class="btn btn-hard" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
+                              '<button id="setKnown" type="button" class="btn btn-known" data-eid="' + $(this).attr('data-eid') + '">3</button>';
                 }
             });
         });

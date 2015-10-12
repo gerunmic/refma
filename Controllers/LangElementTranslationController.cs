@@ -30,6 +30,36 @@ namespace Refma.Controllers
             return View(langelementtranslations.ToList());
         }
 
+        public ActionResult RequestTranslation2(int langElementId)
+        {
+            String currentUserId = User.Identity.GetUserId();
+            ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
+
+            LangElement element = db.LangElements.Where(l => l.LangId == currentUser.TargetLangId && l.ID == langElementId).FirstOrDefault();
+
+            GlosbeDictionaryService service = new GlosbeDictionaryService();
+            GlosbeResponse response = service.getTranslation(currentUser, element);
+
+            if (response != null)
+            {
+                foreach (var t in response.tuc)
+                {
+                    if (t.phrase != null)
+                    {
+                        if (t.phrase.text != null)
+                        {
+                            LangElementTranslation newElement = new LangElementTranslation() { LangId = currentUser.LangId, LangElementId = element.ID, Translation = t.phrase.text };
+                            db.LangElementTranslations.Add(newElement);
+                        }
+
+                    }  
+                  
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index", new { langElementId = element.ID });
+        }
+
         public ActionResult RequestTranslation(int langElementId)
         {
             String currentUserId = User.Identity.GetUserId();

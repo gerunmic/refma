@@ -28,9 +28,10 @@ namespace Refma.Models
         {
             this.article = article;
 
-           // this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
+            // this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
 
-            if (readFromDatabase) { 
+            if (readFromDatabase)
+            {
                 ReadArticleElementsFromDatabase(article);
             }
 
@@ -52,20 +53,35 @@ namespace Refma.Models
 
                 foreach (var e in userElements.ToList<UserLangElement>())
                 {
-                    dicUser.Add(e.LangElementId, e);
+                    try
+                    {
+                        dicUser.Add(e.LangElementId, e);
+                    }
+                    catch (ArgumentException x)
+                    {
+
+                    }
                 }
 
                 foreach (var e in allElements.ToList<LangElement>())
                 {
-                    dic.Add(e.Value, e);
+                    try
+                    {
+                        dic.Add(e.Value, e);
+                    }
+                    catch (ArgumentException x)
+                    {
+
+                    }
                 }
+
             }
         }
 
         public static string[] ExtractStringElements(string source)
         {
             string[] stringElements = Regex.Split(source, SpecialCharactersClass.getSplitPattern());
-            return stringElements.Where(s => s!= String.Empty).ToArray();
+            return stringElements.Where(s => s != String.Empty).ToArray();
         }
 
         public List<ViewArticleElement> GetAllViewElements()
