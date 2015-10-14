@@ -102,12 +102,18 @@ namespace Refma.Controllers
             return View();
         }
 
-        public ActionResult Read(int? id)
+        public ActionResult Read(int? id) 
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             WebArticle webarticle = db.WebArticles.Find(id);
             if (webarticle == null)
             {
@@ -120,20 +126,6 @@ namespace Refma.Controllers
             ArticleDecorator decorator = new ArticleDecorator(webarticle);
             List<ViewArticleElement> viewElements = decorator.GetAllViewElements();
 
-            // todo: check if not too slow!
-
-            foreach (var ve in viewElements)
-            {
-                if (ve.IsNotAWord == false)
-                {
-                    var trans = db.LangElementTranslations.Where(t => t.LangElementId == ve.LangElementId && t.LangId == currentUser.LangId).Distinct().Take(2);
-                    foreach (var t in trans)
-                    {
-                        ve.Translations.Add(t.Translation);
-
-                    }
-                }
-            }
 
 
             ViewBag.ViewElements = viewElements;

@@ -11,10 +11,10 @@ using System.Web.Configuration;
 
 namespace Refma.Controllers
 {
+
     public class UserLangElementController : Controller
     {
-
-        
+  
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: /UserLangElement/

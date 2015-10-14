@@ -28,8 +28,6 @@ namespace Refma.Models
         {
             this.article = article;
 
-            // this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
-
             if (readFromDatabase)
             {
                 ReadArticleElementsFromDatabase(article);
@@ -41,10 +39,14 @@ namespace Refma.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+                
+
                 var allElements = from e in db.LangElements
                                   from w in db.WebArticleElements
                                   where e.ID == w.LangElementId && w.WebArticleId == article.ID
-                                  select e;
+                                  select e ;
+
+
                 var userElements = from u in db.UserLangElements
                                    from w in db.WebArticleElements
                                    where u.LangElementId == w.LangElementId && w.WebArticleId == article.ID

@@ -533,7 +533,6 @@
     <Content Include="images\TO.png" />
     <Content Include="images\ToGo.png" />
     <Content Include="images\TR.png" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

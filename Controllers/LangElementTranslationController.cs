@@ -19,15 +19,17 @@ namespace Refma.Controllers
         // GET: /LangElementTranslation/
         public ActionResult Index(int? langElementId)
         {
-            var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
+            var translations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
 
             if (langElementId.HasValue)
-            {
-                langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
+            {   
+                string userId = User.Identity.GetUserId();
+                ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
+                translations = translations.Where(t => t.LangElementId == langElementId).Where(d => d.LangId == currentUser.LangId);
                 ViewBag.Itemid = langElementId;
             }
 
-            return View(langelementtranslations.ToList());
+            return View(translations.ToList());
         }
 
         public ActionResult RequestTranslation2(int langElementId)
@@ -112,16 +114,16 @@ namespace Refma.Controllers
 
         }
 
+       
         public JsonResult GetTranslations(int langElementId)
         {
-            var langelementtranslations = db.LangElementTranslations.Include(l => l.Lang).Include(l => l.LangElement);
 
+            string userId = User.Identity.GetUserId();
 
-            langelementtranslations = langelementtranslations.Where(t => t.LangElementId == langElementId);
-            ViewBag.Itemid = langElementId;
+            ApplicationUser currentUser = db.Users.Single(u => u.Id == userId);
+            var transList = db.LangElementTranslations.Where(u => u.LangElementId == langElementId && u.LangId == currentUser.LangId).Select(p => new  { Value = p.Translation  }).Take(3);
 
-
-            return Json(langelementtranslations.ToList(), JsonRequestBehavior.AllowGet);
+            return Json(transList.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: /LangElementTranslation/Details/5
