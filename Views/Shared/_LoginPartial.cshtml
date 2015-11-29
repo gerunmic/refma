@@ -11,9 +11,8 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
-    
        <ul class="nav navbar-nav navbar-right">
-           <li style="vertical-align: middle; height: 50px; line-height: 50px;"><img src="/images/@currentUser.TargetLang.ImageBig" style="border-radius: 50% 50% 50% 50%;width: 30px;height:30px" /></li>
+           <li style="vertical-align: middle; height: 50px; line-height: 50px;"><img src="/images/@currentUser.TargetLang.ImageBig" style="border-radius: 50% 50% 50% 50%;width: 20px;height:20px" /></li>
             <li>
                 @Html.ActionLink("My Profile", "AccountSettings", "Account", routeValues: null, htmlAttributes: new { title = "Settings" })
             </li>

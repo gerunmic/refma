@@ -42,7 +42,7 @@
             Listen
         </th>
         <th>
-            Value
+            Element
         </th>
         <th>
             Knowledge
@@ -63,8 +63,21 @@
                 @Html.DisplayFor(modelItem => item.LangElement.Value)
             </td>
             <td style="vertical-align:middle !important">
-                @Html.DisplayFor(modelItem => item.Knowledge)
-            </td>
+
+                @if (item.Knowledge == Refma.Models.Knowledge.Known)
+                {
+                    <span class="label label-success"> @Html.DisplayFor(modelItem => item.Knowledge) </span>
+                }
+                else if (item.Knowledge == Refma.Models.Knowledge.Unknown)
+                {
+                    <span class="label label-default"> @Html.DisplayFor(modelItem => item.Knowledge) </span>
+                } 
+                else
+                {
+                    <span class="label label-warning"> @Html.DisplayFor(modelItem => item.Knowledge) </span>
+                } 
+                
+               </td>
 
             <td style="text-align:right">
                 <a title="Request translations" href="@Url.Action("RequestTranslation", "LangElementTranslation", new { langElementId = item.LangElementId })" class="btn-lg glyphicon glyphicon-cloud" style="text-decoration: none !important;" />
