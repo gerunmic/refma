@@ -170,6 +170,12 @@ namespace Refma.Controllers
                     string title;
                     webarticle.PlainText = WebtextExtractor.ExtractTextOnly(webarticle.URL, out title);
                     webarticle.Title = System.Web.HttpUtility.HtmlDecode(webarticle.Title + title);
+
+                    if (webarticle.Title == null)
+                    {
+                        webarticle.Title = webarticle.URL;
+                    }
+
                     db.WebArticles.Add(webarticle);
                     db.SaveChanges();
                     // end saving article, id known nown
