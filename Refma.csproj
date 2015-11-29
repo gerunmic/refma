@@ -257,7 +257,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ArticleDecorator.cs" />
+    <Compile Include="Models\GlosbeDictionaryService.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\IDictionaryService.cs" />
     <Compile Include="Models\Knowledge.cs" />
     <Compile Include="Models\Lang.cs" />
     <Compile Include="Models\LangElement.cs" />
@@ -531,7 +533,6 @@
     <Content Include="images\TO.png" />
     <Content Include="images\ToGo.png" />
     <Content Include="images\TR.png" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -656,6 +657,7 @@
     <Content Include="Views\Sentences\Details.cshtml" />
     <Content Include="Views\Sentences\Edit.cshtml" />
     <Content Include="Views\Sentences\Index.cshtml" />
+    <Content Include="Views\WebArticles\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

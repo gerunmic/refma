@@ -49,6 +49,25 @@
                 });
             }
 
+            function retrieveTranslations(eid) {
+                $.ajax({
+                    type: "POST",
+                    url: '/LangElementTranslation/GetTranslations',
+                    data: { langElementId: eid },
+                    datatype: "json",
+                    success: function (data) {
+
+                        
+                        $.each(data, function(index) {
+
+                            
+                            $('#'+eid).append("<p>"+  data[index].Value + "</p>");
+                        });
+                    }
+                });
+               
+            }
+
             function changeClassForElement(eid, new1) {
                 $('span[data-eid="' + eid + '"]').each(function () {
                     $(this).removeClass().addClass(new1);
@@ -95,11 +114,14 @@
                     return $(this).html() +  " <span class=\"glyphicon glyphicon-play-circle\" onclick=\"speak('"+currentLang +"','" + $(this).html() + "')\"></span>" ;
                 },
                 content: function () {
-                    return $(this).attr('translation') + '<br>' +
-                        '<button id="setUnknown" type="button" class="btn btn-danger" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
-                            '<button id="setSeen" type="button" class="btn btn-info" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
-                            '<button id="setHard" type="button" class="btn btn-warning" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
-                              '<button id="setKnown" type="button" class="btn btn-success" data-eid="' + $(this).attr('data-eid') + '">3</button>';
+
+                    
+                    retrieveTranslations($(this).attr('data-eid'));
+                    return '<div id="' + $(this).attr('data-eid') + '"></div>'+
+                        '<button id="setUnknown" type="button" class="btn btn-unknown" data-eid="' + $(this).attr('data-eid') + '">0</button>' +
+                            '<button id="setSeen" type="button" class="btn btn-seen" data-eid="' + $(this).attr('data-eid') + '">1</button>' +
+                            '<button id="setHard" type="button" class="btn btn-hard" data-eid="' + $(this).attr('data-eid') + '">2</button>' +
+                              '<button id="setKnown" type="button" class="btn btn-known" data-eid="' + $(this).attr('data-eid') + '">3</button>';
                 }
             });
         });
@@ -141,15 +163,16 @@
                 var dataContent = "";
                 if (el.Translations.Count > 0)
                 {
+                    dataContent += "<table class='table'>";
                     foreach (var item in el.Translations)
                     {
-                        dataContent += item + "<br>";
+                        dataContent += "<tr><td>" + item + "</tr></td>";
                     }
+                    dataContent += "</table>";
 
                 }
  
                 <span data-eid="@el.LangElementId" translation="@dataContent" tabindex="0" class="word @el.Knowledge">@el.Value</span>
-
             }
         }
     </div>

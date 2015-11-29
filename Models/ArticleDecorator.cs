@@ -28,9 +28,8 @@ namespace Refma.Models
         {
             this.article = article;
 
-           // this.dic = new Dictionary<string, LangElement>(StringComparer.OrdinalIgnoreCase);
-
-            if (readFromDatabase) { 
+            if (readFromDatabase)
+            {
                 ReadArticleElementsFromDatabase(article);
             }
 
@@ -40,10 +39,14 @@ namespace Refma.Models
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
+                
+
                 var allElements = from e in db.LangElements
                                   from w in db.WebArticleElements
                                   where e.ID == w.LangElementId && w.WebArticleId == article.ID
-                                  select e;
+                                  select e ;
+
+
                 var userElements = from u in db.UserLangElements
                                    from w in db.WebArticleElements
                                    where u.LangElementId == w.LangElementId && w.WebArticleId == article.ID
@@ -52,20 +55,35 @@ namespace Refma.Models
 
                 foreach (var e in userElements.ToList<UserLangElement>())
                 {
-                    dicUser.Add(e.LangElementId, e);
+                    try
+                    {
+                        dicUser.Add(e.LangElementId, e);
+                    }
+                    catch (ArgumentException x)
+                    {
+
+                    }
                 }
 
                 foreach (var e in allElements.ToList<LangElement>())
                 {
-                    dic.Add(e.Value, e);
+                    try
+                    {
+                        dic.Add(e.Value, e);
+                    }
+                    catch (ArgumentException x)
+                    {
+
+                    }
                 }
+
             }
         }
 
         public static string[] ExtractStringElements(string source)
         {
             string[] stringElements = Regex.Split(source, SpecialCharactersClass.getSplitPattern());
-            return stringElements.Where(s => s!= String.Empty).ToArray();
+            return stringElements.Where(s => s != String.Empty).ToArray();
         }
 
         public List<ViewArticleElement> GetAllViewElements()

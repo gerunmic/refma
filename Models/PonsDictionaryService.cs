@@ -9,7 +9,7 @@ using System.Web.Configuration;
 
 namespace Refma.Models
 {
-	public class PonsDictionaryService
+	public class PonsDictionaryService : Refma.Models.IDictionaryService<PonsResponse>
 	{
 		
 		public List<PonsResponse> getTranslation (String srcLang, String destLang, String word)

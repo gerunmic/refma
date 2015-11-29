@@ -12,6 +12,7 @@ using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Web.Configuration;
 using PagedList;
+using System.ComponentModel.DataAnnotations;
 
 namespace Refma.Controllers
 {
@@ -22,19 +23,19 @@ namespace Refma.Controllers
         // GET: /WebArticles/
         public ActionResult Index(string currentFilter, string searchString, int? page)
         {
-            
+
             string userId = User.Identity.GetUserId();
             if (userId != null)
             {
-                int defaultPageSize =  Int32.Parse(WebConfigurationManager.AppSettings["defaultPageSize"]);
+                int defaultPageSize = Int32.Parse(WebConfigurationManager.AppSettings["defaultPageSize"]);
 
                 ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
                 ViewBag.LangCode = currentUser.TargetLang.Code;
 
-               
+
                 var userWebArticles = from e in db.WebArticles
                                       where e.UserId == userId && e.LangId == currentUser.TargetLangId
-                                     // orderby e.ID descending
+                                      // orderby e.ID descending
                                       select e;
 
                 if (!String.IsNullOrEmpty(searchString))
@@ -57,48 +58,78 @@ namespace Refma.Controllers
 
                 return View(userWebArticles.OrderByDescending(u => u.ID).ToPagedList(pageNumber, defaultPageSize));
 
-                
+
             }
             return View();// show nothing
         }
 
+        public class FrequencyModel {
+            public string LangName;
+            public int LangElementId;
+            public string LangElementValue;
+            public int Occurences;
+        }
 
-        public ActionResult Read(int? id)
+        public ActionResult Dashboard()
         {
+
+            string userId = User.Identity.GetUserId();
+            if (userId != null)
+            {
+
+                ApplicationUser currentUser = db.Users.First(u => u.Id == userId);
+
+                int userTargetCode = currentUser.TargetLang.ID;
+
+                var freqList = from w in db.WebArticleElements
+                               join e in db.LangElements on w.LangElementId equals e.ID into temp
+                            
+                               from t in temp.DefaultIfEmpty()
+                               where t.LangId.Equals(userTargetCode)
+                               group t by new { t.Lang.Name, t.Value, w.LangElementId } into g
+                               select new FrequencyModel
+                               {
+                                   LangName = g.Key.Name,
+                                   LangElementId = g.Key.LangElementId,
+                                   LangElementValue = g.Key.Value,
+                                   Occurences = g.Count()
+                               };
+
+
+                return View(freqList.OrderByDescending(f => f.Occurences).Take(500).ToList());
+            }
+
+            return View();
+        }
+
+        public ActionResult Read(int? id) 
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            db.Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
             WebArticle webarticle = db.WebArticles.Find(id);
             if (webarticle == null)
             {
                 return HttpNotFound();
             }
-            
+
             string currentUserId = User.Identity.GetUserId();
             ApplicationUser currentUser = db.Users.Where(u => u.Id == currentUserId).FirstOrDefault();
 
             ArticleDecorator decorator = new ArticleDecorator(webarticle);
             List<ViewArticleElement> viewElements = decorator.GetAllViewElements();
 
-            // todo: check if not too slow!
-          
-            foreach (var ve in viewElements)
-            {
-                if (ve.IsNotAWord == false)
-                {
-                   var trans =  db.LangElementTranslations.Where(t => t.LangElementId == ve.LangElementId && t.LangId == currentUser.LangId).Distinct().Take(2);
-                   foreach(var t in trans)
-                   {
-                       ve.Translations.Add(t.Translation);
 
-                   }
-                }
-            }
-           
 
             ViewBag.ViewElements = viewElements;
-          
+
             return View(webarticle);
         }
 
@@ -132,7 +163,7 @@ namespace Refma.Controllers
             {
                 string userId = User.Identity.GetUserId();
                 webarticle.UserId = userId;
-               
+
                 if (webarticle.URL != null)
                 {
                     // first, save article to get Id
@@ -219,7 +250,7 @@ namespace Refma.Controllers
         {
             string currentUserId = User.Identity.GetUserId();
             WebArticle a = db.WebArticles.Where(u => u.ID == id && u.UserId == currentUserId).FirstOrDefault();
-           
+
             if (a != null)
             {
                 a.PercentageKnown = percentage;

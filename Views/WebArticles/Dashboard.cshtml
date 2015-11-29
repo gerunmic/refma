@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Refma.Controllers.WebArticlesController.FrequencyModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h2>Dashboard</h2>
+<table class="table-striped" >
+    <tr>
+        <th>
+           Wort
+        </th>
+        <th>
+           Occures in N articles
+        </th>
+    </tr>
+    
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LangElementValue)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.Occurences)
+            </td>
+        </tr>
+    }
+
+</table>
+

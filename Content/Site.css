@@ -19,7 +19,7 @@ body {
     padding-right: 15px;
 }
 
-.navbar-inverse { background-color: #1caff6 !important; }
+.navbar-inverse { background-color: #007acc!important; }
 .navbar-inverse .navbar-nav>li>a  { color: #ffffff !important; }
 .navbar-brand { color: #ffffff !important; }
 
@@ -97,3 +97,27 @@ span.word {
 	-webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	-moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 	}
+
+.btn-unknown {
+  color: #fff;
+  background-color: orange;
+  border-color: #d43f3a;
+}
+
+.btn-seen {
+  color: #fff;
+  background-color: darkcyan;
+  border-color: #d43f3a;
+}
+
+.btn-hard {
+  color: #fff;
+  background-color: red;
+  border-color: #d43f3a;
+}
+
+.btn-known {
+  color: #fff;
+  background-color: black;
+  border-color: #d43f3a;
+}
